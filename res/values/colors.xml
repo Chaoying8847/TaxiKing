@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="main_bg_color">#ecdde2</color>
+    <color name="main_pink_color">#d64569</color>
+    
+    
+    <color name="header_bar_color">#d8466a</color>
+    <color name="login_input_back_color">#dde5fa</color>
+    <color name="login_input_color">#f6f6f6</color>
+    <color name="screen_back_color">#eeeeee</color>
+    
+    <color name="link_color">#0099cc</color>
+    <color name="grey_color">#999999</color>
+    
+</resources>

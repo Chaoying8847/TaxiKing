@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+    <LinearLayout
+        android:id="@+id/header_view"
+        android:layout_width="match_parent"
+	    android:layout_height="40dp"
+	    android:background="@color/main_pink_color"
+	    android:orientation="horizontal">
+	    
+        <Button
+            android:id="@+id/btn_back"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/btn_back"/>
+	    <TextView
+	        android:layout_width="4dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/topbar_divider"/>
+	    <TextView
+	        android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginRight="44dp"
+            android:gravity="center"
+            android:text="@string/register"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"/>
+    </LinearLayout>
+    
+    <TextView
+        android:layout_width="match_parent"
+	    android:layout_height="6dp"
+	    android:layout_below="@id/header_view"
+	    android:background="@drawable/topbar_shadow" />
+    
+    <RelativeLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:layout_below="@id/header_view"
+	    android:padding="@dimen/margin_extra_large"
+	    android:gravity="center">
+	       
+	    <EditText
+	        android:id="@+id/txt_password"
+	        android:layout_width="match_parent"
+	    	android:layout_height="50dp"
+	    	android:layout_marginBottom="@dimen/margin_extra_large"
+	    	android:inputType="textPassword"
+	    	android:hint="@string/password"
+	    	android:textColor="@color/main_pink_color"
+	        android:textSize="20sp"/>
+	    <Button
+	        android:id="@+id/btn_complete"
+	        android:layout_width="match_parent"
+	        android:layout_height="50dp"
+	    	android:layout_below="@id/txt_password"
+	        android:background="@drawable/btn_outline_pink"
+	        android:text="@string/complete"
+	        android:textColor="@color/main_pink_color"
+	        android:textSize="26sp"/>
+	</RelativeLayout>
+
+</RelativeLayout>
