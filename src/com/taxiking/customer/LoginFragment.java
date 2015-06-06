@@ -48,6 +48,7 @@ public class LoginFragment extends BaseFragment {
 		super.onClick(v);
 		switch (v.getId()) {
 		case R.id.btn_login:
+			
 			break;
 		case R.id.btn_back:
 			parent.goBack();

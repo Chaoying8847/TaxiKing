@@ -55,6 +55,7 @@ public class LoginOptionFragment extends BaseFragment implements View.OnClickLis
 			LoginOptionFragment.this.parent.showFragment(RegisterPhoneNumberFragment.newInstance(), true);
 			break;
 		case R.id.btn_terms:
+			LoginOptionFragment.this.parent.showFragment(TermsFragment.newInstance(), true);
 			break;
 		default:
 			break;
