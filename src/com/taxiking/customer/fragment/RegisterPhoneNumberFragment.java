@@ -1,4 +1,4 @@
-package com.taxiking.customer;
+package com.taxiking.customer.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,16 +7,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.taxiking.customer.R;
 import com.taxiking.customer.base.BaseFragment;
 
-public class RegisterCompleteFragment extends BaseFragment {
+public class RegisterPhoneNumberFragment extends BaseFragment  implements View.OnClickListener {
 
-	private Button btnComplete;
+	private Button btnSend;
 	private Button btnBack;
-	private EditText txtPassword;
+	private EditText txtPhoneNumber;
 	
-	public static RegisterCompleteFragment newInstance() {
-		RegisterCompleteFragment fragment = new RegisterCompleteFragment();
+	public static RegisterPhoneNumberFragment newInstance() {
+		RegisterPhoneNumberFragment fragment = new RegisterPhoneNumberFragment();
 		return fragment;
 	}
 
@@ -29,13 +30,13 @@ public class RegisterCompleteFragment extends BaseFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		View rootview = inflater.inflate(R.layout.fragment_register_complete, null);
+		View rootview = inflater.inflate(R.layout.fragment_input_phonenumber, null);
 		
-		btnComplete		= (Button)rootview.findViewById(R.id.btn_complete);
+		btnSend			= (Button)rootview.findViewById(R.id.btn_send);
 		btnBack			= (Button)rootview.findViewById(R.id.btn_back);
-		txtPassword	= (EditText)rootview.findViewById(R.id.txt_password);
+		txtPhoneNumber	= (EditText)rootview.findViewById(R.id.txt_phonenumber);
 		
-		btnComplete.setOnClickListener(this);
+		btnSend.setOnClickListener(this);
 		btnBack.setOnClickListener(this);
 	
 		return rootview;
@@ -45,7 +46,8 @@ public class RegisterCompleteFragment extends BaseFragment {
 	public void onClick(View v) {
 		super.onClick(v);
 		switch (v.getId()) {
-		case R.id.btn_complete:
+		case R.id.btn_send:
+			RegisterPhoneNumberFragment.this.parent.showFragment(RegisterConfirmFragment.newInstance(), true);
 			break;
 		case R.id.btn_back:
 			parent.goBack();

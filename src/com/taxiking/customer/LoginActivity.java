@@ -3,6 +3,7 @@ package com.taxiking.customer;
 import android.os.Bundle;
 
 import com.taxiking.customer.base.BaseFragmentActivity;
+import com.taxiking.customer.fragment.LoginOptionFragment;
 import com.taxiking.customer.utils.AppPreferences;
 
 public class LoginActivity extends BaseFragmentActivity {

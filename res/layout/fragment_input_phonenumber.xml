@@ -6,14 +6,14 @@
     <LinearLayout
         android:id="@+id/header_view"
         android:layout_width="match_parent"
-	    android:layout_height="40dp"
+	    android:layout_height="@dimen/menu_size"
 	    android:background="@color/main_pink_color"
 	    android:orientation="horizontal">
 	    
         <Button
             android:id="@+id/btn_back"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
+            android:layout_width="@dimen/menu_size"
+            android:layout_height="@dimen/menu_size"
             android:background="@drawable/btn_back"/>
 	    <TextView
 	        android:layout_width="4dp"

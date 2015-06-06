@@ -4,7 +4,7 @@
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
-    <style name="AppBaseTheme" parent="android:Theme.Holo">
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
         <item name="android:actionBarStyle">@style/MyActionBar</item>
     </style>
 
@@ -14,14 +14,15 @@
     </style>
 
     <style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
-        <item name="android:background">#014f96</item>
+        <item name="android:background">#d64569</item>
         <item name="android:titleTextStyle">@style/Theme.MyAppTheme.ActionBar.TitleTextStyle</item>
-        <item name="android:drawableLeft">@drawable/icon_list</item>
+        <item name="android:drawableLeft">@drawable/ic_menu_list</item>
     </style>
 
     <style name="Theme.MyAppTheme.ActionBar.TitleTextStyle" parent="android:style/TextAppearance.Holo.Widget.ActionBar.Title">
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:text">@string/app_name</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <!-- Slide Menu -->

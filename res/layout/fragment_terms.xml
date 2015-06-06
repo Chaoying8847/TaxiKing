@@ -6,7 +6,7 @@
     <LinearLayout
         android:id="@+id/header_view"
         android:layout_width="match_parent"
-	    android:layout_height="40dp"
+	    android:layout_height="@dimen/menu_size"
 	    android:background="@color/main_pink_color"
 	    android:orientation="horizontal">
 	    
@@ -47,7 +47,7 @@
 	        android:layout_width="match_parent"
 	        android:layout_height="match_parent"
 	        android:padding="10dp"
-	        android:text="@string/terms_of_service"/>"
+	        android:text="@string/terms_of_service"/>
 	</RelativeLayout>
 
 </RelativeLayout>

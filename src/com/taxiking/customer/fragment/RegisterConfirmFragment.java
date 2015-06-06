@@ -1,4 +1,4 @@
-package com.taxiking.customer;
+package com.taxiking.customer.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.taxiking.customer.R;
 import com.taxiking.customer.base.BaseFragment;
 
 public class RegisterConfirmFragment extends BaseFragment implements View.OnClickListener {

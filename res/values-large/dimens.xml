@@ -36,7 +36,7 @@
     <dimen name="actionbar_icon_size">48dp</dimen>
     
     <!-- Sliding Menu -->
-    <dimen name="slide_left_width">300dp</dimen>
+    <dimen name="slide_left_width">225dp</dimen>
     <dimen name="slide_right_width">450dp</dimen>
     
     <!-- Normal Product Cell -->

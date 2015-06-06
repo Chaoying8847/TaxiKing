@@ -63,4 +63,12 @@ public class AppConstants {
 		TYPE_AWAITIG_FILING
 	};
 	
+	/*
+	 * Fragment IDs
+	 */
+	public static final int SW_FRAGMENT_HOME = 0x100;
+	public static final int SW_FRAGMENT_ORDER = 0x200;
+	public static final int SW_FRAGMENT_PRICE_LIST = 0x300;
+	public static final int SW_FRAGMENT_MORE = 0x400;
+	
 }
