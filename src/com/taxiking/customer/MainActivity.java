@@ -1,8 +1,6 @@
 package com.taxiking.customer;
 
 import android.content.Intent;
-import android.graphics.Matrix;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -10,12 +8,12 @@ import android.support.v4.app.FragmentManager;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageView;
-import android.widget.ImageView.ScaleType;
 import android.widget.Toast;
 
-import com.taxiking.customer.fragment.MainAboutFragment;
-import com.taxiking.customer.fragment.TermsFragment;
+import com.taxiking.customer.fragment.MapFragment;
+import com.taxiking.customer.fragment.MoreFragment;
+import com.taxiking.customer.fragment.OrderFragment;
+import com.taxiking.customer.fragment.PriceListFragment;
 import com.taxiking.customer.utils.AppConstants;
 
 public class MainActivity extends BaseRightMenuActivity implements OnClickListener {
@@ -23,8 +21,6 @@ public class MainActivity extends BaseRightMenuActivity implements OnClickListen
 
 	// Data
 	private int mCurrentFragmentIndex = AppConstants.SW_FRAGMENT_MORE;
-	private String mStrTitle = "";
-
 	public static boolean isBackPressed = false;
 
 	@Override
@@ -70,9 +66,6 @@ public class MainActivity extends BaseRightMenuActivity implements OnClickListen
 	@Override
 	public void setTitle(CharSequence title) {
 		super.setTitle(title);
-		mStrTitle = title+"";
-//		if (titlebar_txt_title != null)
-//			titlebar_txt_title.setText(mStrTitle);
 	}
 
 	@Override
@@ -90,7 +83,8 @@ public class MainActivity extends BaseRightMenuActivity implements OnClickListen
 
 	@Override
 	public void onBackPressed() {
-		onBackButtonPressed();
+		super.onBackPressed();
+//		onBackButtonPressed();
 	}
 
 	boolean isBackAllowed = false;
@@ -143,8 +137,8 @@ public class MainActivity extends BaseRightMenuActivity implements OnClickListen
 			break;
 
 		case R.id.layout_logout:
-			Intent intent = new Intent(Intent.ACTION_SENDTO);   
-			intent.setData(Uri.parse("mailto:sales@scanandshop.com"));   
+			finish();
+			Intent intent = new Intent(this, LoginActivity.class);
 			startActivity(intent);	
 			break;
 		}
@@ -156,13 +150,13 @@ public class MainActivity extends BaseRightMenuActivity implements OnClickListen
 		if (mCurrentFragmentIndex != fragment_index) {
 			mCurrentFragmentIndex = fragment_index;
 			if (mCurrentFragmentIndex == AppConstants.SW_FRAGMENT_HOME) {
-				fragment = MainAboutFragment.newInstance();
+				fragment = MapFragment.newInstance();
 			} else if (mCurrentFragmentIndex == AppConstants.SW_FRAGMENT_ORDER) {
-				fragment = TermsFragment.newInstance();  
+				fragment = OrderFragment.newInstance();  
 			} else if (mCurrentFragmentIndex == AppConstants.SW_FRAGMENT_PRICE_LIST) {
-				fragment = TermsFragment.newInstance();
+				fragment = PriceListFragment.newInstance();
 			} else if (mCurrentFragmentIndex == AppConstants.SW_FRAGMENT_MORE) {
-				fragment = TermsFragment.newInstance();
+				fragment = MoreFragment.newInstance();
 			}
 
 			if (fragment != null) {
@@ -171,7 +165,7 @@ public class MainActivity extends BaseRightMenuActivity implements OnClickListen
 						fragment.setArguments(bundle);
 
 					FragmentManager fragmentManager = this.getSupportFragmentManager();
-					fragmentManager.beginTransaction().replace(R.id.main_content, fragment).commit();
+					fragmentManager.beginTransaction().replace(R.id.view_body, fragment).commit();
 				}
 				catch(Exception e) {
 					e.printStackTrace();
@@ -187,23 +181,23 @@ public class MainActivity extends BaseRightMenuActivity implements OnClickListen
 	protected void updateWithSlidingMenu() {
 		super.updateWithSlidingMenu();
 
-		// rotate action bar's icon
-		Matrix homeIconMatrix = new Matrix();
-		ImageView homeIcon = (ImageView)findViewById(android.R.id.home);
-		homeIcon.setScaleType(ScaleType.MATRIX);   //required
-		homeIconMatrix.postRotate((float)(mOffsetPercent*360),
-				homeIcon.getDrawable().getBounds().width()/2,
-				homeIcon.getDrawable().getBounds().height()/2);
-		homeIcon.setImageMatrix(homeIconMatrix);
-
-		// rotate left slider's icon
-		Matrix leftSlidingMenuIconMatrix = new Matrix();
-		ImageView img_app_icon = (ImageView)mSlideMenu.getPrimaryMenu().findViewById(R.id.img_app_icon);
-		img_app_icon.setScaleType(ScaleType.MATRIX);   //required
-		leftSlidingMenuIconMatrix.postRotate((float)(mOffsetPercent*360),
-				img_app_icon.getDrawable().getBounds().width()/2,
-				img_app_icon.getDrawable().getBounds().height()/2);
-		img_app_icon.setImageMatrix(leftSlidingMenuIconMatrix);
+//		// rotate action bar's icon
+//		Matrix homeIconMatrix = new Matrix();
+//		ImageView homeIcon = (ImageView)findViewById(android.R.id.home);
+//		homeIcon.setScaleType(ScaleType.MATRIX);   //required
+//		homeIconMatrix.postRotate((float)(mOffsetPercent*360),
+//				homeIcon.getDrawable().getBounds().width()/2,
+//				homeIcon.getDrawable().getBounds().height()/2);
+//		homeIcon.setImageMatrix(homeIconMatrix);
+//
+//		// rotate left slider's icon
+//		Matrix leftSlidingMenuIconMatrix = new Matrix();
+//		ImageView img_app_icon = (ImageView)mSlideMenu.getPrimaryMenu().findViewById(R.id.img_app_icon);
+//		img_app_icon.setScaleType(ScaleType.MATRIX);   //required
+//		leftSlidingMenuIconMatrix.postRotate((float)(mOffsetPercent*360),
+//				img_app_icon.getDrawable().getBounds().width()/2,
+//				img_app_icon.getDrawable().getBounds().height()/2);
+//		img_app_icon.setImageMatrix(leftSlidingMenuIconMatrix);
 	}
 
 	@Override

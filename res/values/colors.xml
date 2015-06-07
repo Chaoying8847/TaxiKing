@@ -4,6 +4,9 @@
     <color name="main_pink_color">#d64569</color>
     
     <color name="text_gray">#a7a9ac</color>
+    <color name="text_orange">#f7941e</color>
+    
+    <color name="grey_color">#939598</color>
     
     
     <color name="login_input_back_color">#dde5fa</color>
@@ -11,6 +14,5 @@
     <color name="screen_back_color">#eeeeee</color>
     
     <color name="link_color">#0099cc</color>
-    <color name="grey_color">#999999</color>
     
 </resources>

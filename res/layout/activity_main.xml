@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <FrameLayout
-        android:id="@+id/main_content"
+    <RelativeLayout
+        android:id="@+id/view_body"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         slidemenu:layout_role="content"
         android:background="@color/main_bg_color" >
-    </FrameLayout>
+    </RelativeLayout>
 
 </me.tangke.slidemenu.SlideMenu>

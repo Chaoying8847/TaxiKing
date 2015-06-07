@@ -11,7 +11,7 @@ import android.util.Log;
 
 import com.taxiking.customer.apiservice.APIUtil;
 import com.taxiking.customer.apiservice.APIUtil.APIListener;
-import com.taxiking.customer.model.TicketSub;
+import com.taxiking.customer.model.Order;
 import com.taxiking.customer.sqllite.DatabaseHandler;
 import com.taxiking.customer.utils.AppConstants;
 import com.taxiking.customer.utils.AppDeviceUtils;
@@ -27,7 +27,7 @@ public class SubmitService extends Service{
 //	private int timerInterval = 10000;
 
 	private DatabaseHandler dbHandler;
-	private ArrayList<TicketSub> ticketList;
+	private ArrayList<Order> orderList;
 	
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -75,11 +75,11 @@ public class SubmitService extends Service{
 			count = (count > 1000) ? 0 : count;
 			try {
 				if (AppDeviceUtils.isOnline(getBaseContext())) {
-					ticketList = dbHandler.Get_tickets();
-					if (ticketList != null) {
-						for (int i = 0; i< ticketList.size(); i++)
-							submitTicket(ticketList.get(i));
-					}
+//					orderList = dbHandler.Get_tickets();
+//					if (orderList != null) {
+//						for (int i = 0; i< orderList.size(); i++)
+//							submitTicket(orderList.get(i));
+//					}
 				} else {
 				}
 			} catch (Exception e) {
@@ -101,29 +101,29 @@ public class SubmitService extends Service{
 		}
 	}
 	
-	private void submitTicket(final TicketSub ticket) {
+	private void submitTicket(final Order order) {
 //		Log.d(TAG, "Ticket " + ticket.ticket_id + " submit started by service");
 		final APIUtil api = new APIUtil();
-		api.submitTicket(new APIListener() {
-			@Override
-			public void onResult(Object ret, int err) {
-				switch (err) {
-				case AppConstants.ERR_OK:
-//					Log.d(TAG, "Ticket " + ticket.ticket_id + " submited by service");
-					dbHandler.delete_Ticket(ticket.ticket_id);
-
-					Intent intent = new Intent(AppConstants.REFRESH_SCREEN);
-					intent.putExtra(AppConstants.HAS_SUBMITTED, true);
-					getBaseContext().sendBroadcast(intent);
-
-					break;
-				case AppConstants.ERR_CLIENT_NETWORK:
-				default:
-//					Log.d(TAG, "Ticket " + ticket.ticket_id + " submit failed by service");
-					break;
-				}
-			}
-		}, ticket, ticket.ticket_id);
+//		api.submitTicket(new APIListener() {
+//			@Override
+//			public void onResult(Object ret, int err) {
+//				switch (err) {
+//				case AppConstants.ERR_OK:
+////					Log.d(TAG, "Ticket " + ticket.ticket_id + " submited by service");
+//					dbHandler.delete_Ticket(order.order_id);
+//
+//					Intent intent = new Intent(AppConstants.REFRESH_SCREEN);
+//					intent.putExtra(AppConstants.HAS_SUBMITTED, true);
+//					getBaseContext().sendBroadcast(intent);
+//
+//					break;
+//				case AppConstants.ERR_CLIENT_NETWORK:
+//				default:
+////					Log.d(TAG, "Ticket " + ticket.ticket_id + " submit failed by service");
+//					break;
+//				}
+//			}
+//		}, order, order.order_id);
 	}
 	
 	private void LoginTask() {

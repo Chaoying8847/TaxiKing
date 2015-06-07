@@ -10,6 +10,7 @@
     <dimen name="margin_extra_large">32dp</dimen>
     <dimen name="margin_very_large">48dp</dimen>
     <dimen name="margin_really_large">64dp</dimen>
+    
     <dimen name="textsize_very_small">8sp</dimen>
     <dimen name="textsize_extra_small">10sp</dimen>
     <dimen name="textsize_small">12sp</dimen>
@@ -18,6 +19,7 @@
     <dimen name="textsize_extra_large">18sp</dimen>
     <dimen name="textsize_very_large">20sp</dimen>
     <dimen name="textsize_really_large">22sp</dimen>
+    <dimen name="textsize_menu_large">36sp</dimen>
     
     <!-- Image Size -->
     <dimen name="image_extra_small">36dp</dimen>
