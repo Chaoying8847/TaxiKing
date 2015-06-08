@@ -9,8 +9,8 @@
 	    android:layout_height="match_parent"
 	    android:background="@color/main_bg_color" />
     
-    <TextView
-        android:id="@+id/footer_view"
+    <Button
+        android:id="@+id/btn_request"
         android:layout_width="match_parent"
 	    android:layout_height="@dimen/menu_size"
 	    android:layout_alignParentBottom="true"

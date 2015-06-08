@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.taxiking.customer.MainActivity;
 import com.taxiking.customer.R;
@@ -29,6 +30,13 @@ public class MapFragment extends BaseFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View rootview = inflater.inflate(R.layout.fragment_map, null);
 
+		Button btnRequest = (Button)rootview.findViewById(R.id.btn_request);
+		btnRequest.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+//				MapFragment.this.parent.showFragment(RegisterPhoneNumberFragment.newInstance(), true);
+			}
+		});
 		return rootview;
 	}
 }
