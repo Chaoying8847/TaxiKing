@@ -1,16 +1,34 @@
 package com.taxiking.customer.fragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.content.Intent;
+import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.taxiking.customer.LoginActivity;
 import com.taxiking.customer.MainActivity;
 import com.taxiking.customer.R;
+import com.taxiking.customer.apiservice.HttpApi;
+import com.taxiking.customer.apiservice.HttpApi.METHOD;
 import com.taxiking.customer.base.BaseFragment;
+import com.taxiking.customer.fragment.RegisterCompleteFragment.SetPasswordAsyncTask;
+import com.taxiking.customer.service.GPSTracker;
+import com.taxiking.customer.utils.AppConstants;
+import com.taxiking.customer.utils.CommonUtil;
 
 public class LoginFragment extends BaseFragment {
 
@@ -43,6 +61,10 @@ public class LoginFragment extends BaseFragment {
 		btnLogin.setOnClickListener(this);
 		btnBack.setOnClickListener(this);
 	
+		// test code
+		txtPhoneNumber.setText("12345678901");
+		txtPassword.setText("1111");
+		
 		return rootview;
 	}
 
@@ -51,15 +73,86 @@ public class LoginFragment extends BaseFragment {
 		super.onClick(v);
 		switch (v.getId()) {
 		case R.id.btn_login:
-			getActivity().finish();
-			Intent intent = new Intent(getActivity(), MainActivity.class);
-			startActivity(intent);
+			final String phoneNumber= txtPhoneNumber.getText().toString();
+			final String password 	= txtPassword.getText().toString();
+			final String latitude 	= prefs.getLatitude();
+			final String longitude 	= prefs.getLongitude();
+
+			if(phoneNumber.equals("")) {
+				Toast.makeText(parent, R.string.msg_input_phone_number, Toast.LENGTH_LONG).show();
+				return;
+			} else if(password.equals("")) {
+				Toast.makeText(parent, R.string.msg_input_password, Toast.LENGTH_LONG).show();
+				return;
+			} else if (latitude.equals("")){
+				CommonUtil.showLocationWaringDialog(parent);
+			} else if (!CommonUtil.isNetworkAvailable(parent)) {
+				CommonUtil.showNetworkWaringDialog(parent);
+			} else {
+				new LoginAsyncTask().execute(phoneNumber, password, latitude, longitude);
+			}
 			break;
 		case R.id.btn_back:
 			parent.goBack();
 			break;
 		default:
 			break;
+		}
+	}
+	
+
+	public class LoginAsyncTask extends AsyncTask<String, String, JSONObject> {
+
+		@Override
+		protected void onPreExecute() {
+			LoginActivity.instance.showWaitView();
+			super.onPreExecute();
+		}
+		
+		@Override
+		protected JSONObject doInBackground(String... args) {
+			String phone_number = args[0];
+			String password = args[1];
+			String latitude = args[2];
+			String longitude = args[3];
+			
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair("phone_number", phone_number));
+			params.add(new BasicNameValuePair("password", password));
+			params.add(new BasicNameValuePair("latitude", latitude));
+			params.add(new BasicNameValuePair("longitude", longitude));
+
+			return HttpApi.callToJson(AppConstants.HOST_LOGIN, METHOD.POST, params, null);
+		}
+
+		@Override
+		protected void onPostExecute(JSONObject res) {
+			LoginActivity.instance.hideWaitView();
+			try {
+				String result = res.getString("result");
+	
+				if (result.equalsIgnoreCase("success")) {
+					try {
+						String session_token = res.getString("session_token");
+						parent.prefs.setSession(session_token);
+						
+						getActivity().finish();
+			            Intent intent = new Intent(getActivity(), MainActivity.class);
+			            startActivity(intent);
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				} else {
+					try {
+						String errorMsg = res.getString("error");
+						Toast.makeText(parent, errorMsg, Toast.LENGTH_LONG).show();
+					}catch (JSONException e) {
+						e.printStackTrace();
+					}
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }

@@ -4,13 +4,19 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.location.Location;
 
 public class AppPreferences {
 
 	//private static final String CLASS_NAME = "AppPreferences";
 	private static String APP_SHARED_PREFS;
 
-	private final String NO_LOGIN = "NO_LOGIN";
+	private final String SESSION_TOKEN = "session_token";
+	
+	private final String LOCATION_LAT = "latitude";
+	private final String LOCATION_LON = "longitude";
+	
+	
 	
 	private final String CATEGORY_ENABLED = "CATEGORY_ENABLED";
 	
@@ -45,15 +51,34 @@ public class AppPreferences {
 		this.mPrefsEditor = mPrefs.edit();
 	}
 	
-	public void setFirstName(String value) {
-		mPrefsEditor.putString(USER_FNAME, value);
+	public void setSession(String value) {
+		mPrefsEditor.putString(SESSION_TOKEN, value);
 		mPrefsEditor.commit();
 	}
 	
-	public String getFirstName() {
-		String value = mPrefs.getString(USER_FNAME, "");
+	public String getSession() {
+		String value = mPrefs.getString(SESSION_TOKEN, "");
 		return value;
 	}
+	
+	public void setLocation(Location location) {
+		mPrefsEditor.putString(LOCATION_LAT, String.format("%.6f", location.getLatitude()));
+		mPrefsEditor.putString(LOCATION_LON, String.format("%.6f", location.getLongitude()));
+		mPrefsEditor.commit();
+	}
+	
+	public String getLatitude() {
+		String value = mPrefs.getString(LOCATION_LAT, "");
+		return value;
+	}
+	
+	public String getLongitude() {
+		String value = mPrefs.getString(LOCATION_LON, "");
+		return value;
+	}
+	
+	
+	
 	
 	public void setLastName(String value) {
 		mPrefsEditor.putString(USER_LNAME, value);
@@ -87,16 +112,6 @@ public class AppPreferences {
 			mPrefsEditor.putString(LAST_TICKET, "");
 		}
 		mPrefsEditor.commit();
-	}
-
-	public void setNoLogin(boolean value) {
-		mPrefsEditor.putBoolean(NO_LOGIN, value);
-		mPrefsEditor.commit();
-	}
-
-	public boolean isNoLogin() {
-		boolean value = mPrefs.getBoolean(NO_LOGIN, true);
-		return value;
 	}
 	
 	public void setCategoryEnabled(String value) {

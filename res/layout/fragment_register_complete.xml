@@ -38,10 +38,14 @@
 	    android:background="@drawable/topbar_shadow" />
     
     <RelativeLayout
+        android:id="@+id/login_group"
 	    android:layout_width="match_parent"
-	    android:layout_height="match_parent"
+	    android:layout_height="wrap_content"
 	    android:layout_below="@id/header_view"
-	    android:padding="@dimen/margin_extra_large"
+	    android:paddingLeft="@dimen/margin_extra_large"
+	    android:paddingTop="@dimen/margin_very_large"
+	    android:paddingRight="@dimen/margin_extra_large"
+	    android:paddingBottom="@dimen/margin_extra_large"
 	    android:gravity="center">
 	       
 	    <EditText
@@ -63,5 +67,72 @@
 	        android:textColor="@color/main_pink_color"
 	        android:textSize="26sp"/>
 	</RelativeLayout>
+	
+    <LinearLayout
+        android:id="@+id/divider"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@id/login_group"
+	    android:orientation="horizontal"
+	    android:gravity="center" >
+	    
+        <ImageView
+            android:layout_width="0dp"
+	    	android:layout_height="wrap_content"
+	    	android:layout_weight="1"
+	    	android:layout_margin="@dimen/margin_extra_large"
+	    	android:src="@drawable/line_dash_pink"
+	    	android:contentDescription="@string/img_description"/>
+        <TextView
+            android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	    	android:text="@string/or"
+	    	android:textColor="@color/main_pink_color"
+	    	android:textSize="26sp" />
+        <ImageView
+            android:layout_width="0dp"
+	    	android:layout_height="wrap_content"
+	    	android:layout_weight="1"
+	    	android:layout_margin="@dimen/margin_extra_large"
+	    	android:src="@drawable/line_dash_pink"
+	    	android:contentDescription="@string/img_description"/>
+        
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/third_party_group"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+    	android:layout_marginLeft="@dimen/margin_extra_large"
+    	android:layout_marginRight="@dimen/margin_extra_large"
+	    android:layout_below="@id/divider"
+	    android:orientation="horizontal"
+	    android:gravity="center" >
+	    
+        <ImageView
+            android:id="@+id/btn_wechat"
+            android:layout_width="0dp"
+	    	android:layout_height="wrap_content"
+	    	android:layout_weight="1"
+	    	android:layout_margin="@dimen/margin_large"
+	    	android:src="@drawable/ic_wechat"
+	    	android:contentDescription="@string/img_description"/>
+        <ImageView
+            android:id="@+id/btn_weibo"
+            android:layout_width="0dp"
+	    	android:layout_height="wrap_content"
+	    	android:layout_weight="1"
+	    	android:layout_margin="@dimen/margin_large"
+	    	android:src="@drawable/ic_weibo"
+	    	android:contentDescription="@string/img_description"/>
+        <ImageView
+            android:id="@+id/btn_qq"
+            android:layout_width="0dp"
+	    	android:layout_height="wrap_content"
+	    	android:layout_weight="1"
+	    	android:layout_margin="@dimen/margin_large"
+	    	android:src="@drawable/ic_qq"
+	    	android:contentDescription="@string/img_description"/>
+    </LinearLayout>
 
 </RelativeLayout>

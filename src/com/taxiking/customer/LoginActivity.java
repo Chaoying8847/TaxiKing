@@ -4,24 +4,32 @@ import android.os.Bundle;
 
 import com.taxiking.customer.base.BaseFragmentActivity;
 import com.taxiking.customer.fragment.LoginOptionFragment;
-import com.taxiking.customer.utils.AppPreferences;
+import com.taxiking.customer.utils.WaitDialog;
 
 public class LoginActivity extends BaseFragmentActivity {
 
-	private AppPreferences appPreference;
 	private LoginOptionFragment loginOptionFragment;
-	public static LoginActivity loginActivity; 
+	public static LoginActivity instance; 
+	private WaitDialog waitDlg;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		
-		appPreference = new AppPreferences(this);
 		loginOptionFragment = LoginOptionFragment.newInstance();
 		
-		loginActivity = this;
+		instance = this;
+		waitDlg = new WaitDialog(this);
 		
 		showFragment(loginOptionFragment, false, false);
+	}
+	
+	public void showWaitView() {
+		waitDlg.show();
+	}
+	
+	public void hideWaitView() {
+		waitDlg.cancel();
 	}
 }

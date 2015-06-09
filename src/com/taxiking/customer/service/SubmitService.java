@@ -9,8 +9,6 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.taxiking.customer.apiservice.APIUtil;
-import com.taxiking.customer.apiservice.APIUtil.APIListener;
 import com.taxiking.customer.model.Order;
 import com.taxiking.customer.sqllite.DatabaseHandler;
 import com.taxiking.customer.utils.AppConstants;
@@ -18,7 +16,7 @@ import com.taxiking.customer.utils.AppDeviceUtils;
 import com.taxiking.customer.utils.AppPreferences;
 import com.taxiking.customer.utils.Utilities;
 
-public class SubmitService extends Service{
+public class SubmitService extends Service {
 	private static final String TAG = "UpdateService";
 	private AppPreferences preference;
 	private Timer timerCheckProvider = null;
@@ -103,7 +101,7 @@ public class SubmitService extends Service{
 	
 	private void submitTicket(final Order order) {
 //		Log.d(TAG, "Ticket " + ticket.ticket_id + " submit started by service");
-		final APIUtil api = new APIUtil();
+//		final APIUtil api = new APIUtil();
 //		api.submitTicket(new APIListener() {
 //			@Override
 //			public void onResult(Object ret, int err) {
@@ -127,24 +125,24 @@ public class SubmitService extends Service{
 	}
 	
 	private void LoginTask() {
-		if (!preference.isNoLogin()) {
-			final APIUtil api = new APIUtil();
-			api.login(new APIListener() {
-				@Override
-				public void onResult(Object ret, int err) {
-					switch (err) {
-					case AppConstants.ERR_OK:
-						Log.d(TAG, "login success!");
-						break;
-					case AppConstants.ERR_CLIENT_NETWORK:
-					default:
-						Log.d(TAG, "login failed!");
-//						LoginTask();
-						break;
-					}
-				}
-			}, preference.getAccountName(), Utilities.md5(preference.getAccountPasswd()));
-		}
+//		if (!preference.isNoLogin()) {
+//			final APIUtil api = new APIUtil();
+//			api.login(new APIListener() {
+//				@Override
+//				public void onResult(Object ret, int err) {
+//					switch (err) {
+//					case AppConstants.ERR_OK:
+//						Log.d(TAG, "login success!");
+//						break;
+//					case AppConstants.ERR_CLIENT_NETWORK:
+//					default:
+//						Log.d(TAG, "login failed!");
+////						LoginTask();
+//						break;
+//					}
+//				}
+//			}, preference.getAccountName(), Utilities.md5(preference.getAccountPasswd()));
+//		}
 	}
 
 }

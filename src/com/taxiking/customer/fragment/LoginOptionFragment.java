@@ -62,6 +62,4 @@ public class LoginOptionFragment extends BaseFragment implements View.OnClickLis
 			break;
 		}
 	}
-	
-	
 }

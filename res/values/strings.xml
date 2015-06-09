@@ -11,9 +11,11 @@
     <string name="send_request">发送验证码</string>
     <string name="confirm_number">验证码</string>
     <string name="confirm">确认</string>
+    <string name="cancel">取消</string>
     <string name="complete">完成</string>
     <string name="password">密码</string>
     <string name="terms_of_service">服务协议</string>
+    <string name="or">或</string>
     
     <string name="menu_need">我要</string>
     <string name="menu_order">订单</string>
@@ -32,6 +34,20 @@
     <string name="state_requested">未评级</string>
     <string name="state_normal">未评级</string>
     <string name="state_finished">已完成</string>
+    
+    
+    <!-- Message box -->
+    <string name="warning">警告</string>
+    <string name="msg_network_error">网络不可用。 您必须链接到互联网才能使用这个程序。</string>
+    <string name="msg_location_error">你必须设置的位置。</string>
+    <string name="msg_input_phone_number">Must enter a valid phone number</string>
+    <string name="msg_input_verify_code">Must enter a 4 digit verification code</string>
+    <string name="msg_input_password">Must enter a password greater than 4 characters</string>
+    <string name="msg_select_item">Must select at least 1 item</string>
+    <string name="msg_select_rating">Must select a rating</string>
+    <string name="msg_input_anything">Must not leave any empty input</string>
+    <string name="msg_"></string>
+    
     
     <string name="header">Header</string>
     <string name="username">USERNAME</string>

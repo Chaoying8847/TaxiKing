@@ -34,10 +34,13 @@ public class MainActivity extends BaseRightMenuActivity implements OnClickListen
 		View img_app_icon = mSlideMenu.getPrimaryMenu().findViewById(R.id.img_app_icon);
 		img_app_icon.setOnClickListener(this);
 
-//		if (actionBar != null) {
-//			actionBar.setHomeAsUpIndicator(R.drawable.icon_list);
-//			actionBar.setIcon(getResources().getDrawable(R.drawable.icon_list));
-//		}
+		android.app.ActionBar actionBar = this.getActionBar();
+		if (actionBar != null) {
+			actionBar.setIcon(R.drawable.ic_menu_list);
+			
+//			actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_list);
+//			actionBar.setIcon(getResources().getDrawable(R.drawable.ic_menu_list));
+		}
 
 		// left menu
 		View layout_home = mSlideMenu.getPrimaryMenu().findViewById(R.id.layout_home);

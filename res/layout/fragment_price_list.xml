@@ -7,6 +7,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/bg_tile">
+        
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/margin_normal"
+            android:src="@drawable/logo"
+            android:contentDescription="@string/img_description"/>
     </LinearLayout>
     
     <ListView
@@ -15,7 +22,9 @@
         android:layout_height="match_parent"
         android:choiceMode="singleChoice"
         android:divider="@color/main_pink_color"
-        android:dividerHeight="1dp" >
+        android:dividerHeight="1dp"
+        android:visibility="gone" >
+        
     </ListView>
 
 </RelativeLayout>
