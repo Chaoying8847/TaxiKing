@@ -34,10 +34,14 @@
     <string name="state_requested">未评级</string>
     <string name="state_normal">未评级</string>
     <string name="state_finished">已完成</string>
+    <string name="address">地址 :</string>
+    <string name="total_price">总价 :</string>
+    <string name="wechat_pay">微信支付</string>
     
     
     <!-- Message box -->
     <string name="warning">警告</string>
+    <string name="error">错误</string>
     <string name="msg_network_error">网络不可用。 您必须链接到互联网才能使用这个程序。</string>
     <string name="msg_location_error">你必须设置的位置。</string>
     <string name="msg_input_phone_number">Must enter a valid phone number</string>
@@ -48,151 +52,6 @@
     <string name="msg_input_anything">Must not leave any empty input</string>
     <string name="msg_"></string>
     
-    
-    <string name="header">Header</string>
-    <string name="username">USERNAME</string>
-    
-    
-    <string name="tab_title_open">OPEN</string>
-    <string name="tab_title_submitted">SUBMITTED</string>
-    <string name="tab_title_closed">CLOSED</string>
-
-    <!-- table header for open ticket -->
-    <string name="column_load_no">Load NO.</string>
-    <string name="column_load_date">Load Date</string>
-    <string name="column_lease">Lease</string>
-    <string name="column_facility_id">Facility ID</string>
-    <string name="column_deliv_loc">Deliv. Loc.</string>
-    <string name="column_functions">Functions</string>
-    <string name="column_load_no_upper">LOAD NUMBER</string>
-    <string name="column_driver_upper">DRIVER</string>
-    <string name="column_load_date_upper">LOAD DATE</string>
-    <string name="column_lease_upper">LEASE</string>
-    <string name="column_facility_id_upper">FACILITY ID</string>
-    <string name="column_deliv_loc_upper">DELIVERY LOCATION</string>
-    <string name="column_comments_upper">COMMENTS</string>
-    
-    <!-- table header for sub and closed ticket -->
-    <string name="column_lease_no">Lease NO.</string>
-    <string name="column_receiver">Receiver</string>
-    <string name="column_date">Date</string>
-    <string name="column_ticket_no">Ticket No.</string>
-    <string name="column_lease_no_upper">LEASE NUMBER</string>
-    <string name="column_receiver_upper">RECEIVER</string>
-    <string name="column_date_upper">DATE</string>
-    <string name="column_ticket_no_upper">TICKET NUMBER</string>
-    
-    <!-- start ticket -->
-    <string name="ticket_no_oil">NO OIL</string>
-    <string name="ticket_estimated_barrels">ESTIMATED BARRELS</string>
-    <string name="ticket_lease_number">LEASE NUMBER</string>
-    <string name="ticket_operator">OPERATOR ON FIELD LOCATION</string>
-    <string name="ticket_station_number">STATION NUMBER</string>
-    <string name="ticket_lease">LEASE OR COMPANY NAME</string>
-    <string name="ticket_station_name">STATION NAME</string>
-    <string name="ticket_for_account">FOR ACCOUNT OF</string>
-    <string name="ticket_county">COUNTY</string>
-    <string name="ticket_lease_legal">LEASE LEGAL DESCRIPTION</string>
-    <string name="ticket_state">STATE</string>
-    <string name="ticket_name_receiver">NAME OF RECEIVER</string>
-    <string name="ticket_tractor_number">TRACTOR NUMBER</string>
-    <string name="ticket_driver_name">DRIVER NAME</string>
-    <string name="ticket_trailer_number">TRAILER NUMBER</string>
-    <string name="ticket_tank_number">TANK NUMBER</string>
-    <string name="ticket_number">TICKET NUMBER</string>
-    <string name="ticket_tank_size">TANK SIZE</string>
-    <string name="ticket_tank_height">TANK HEIGHT</string>
-    
-    <string name="ticket_date">DATE</string>
-    <string name="ticket_obs_gravity">OBS GRAVITY</string>
-    <string name="ticket_obs_temp">OBS TEMP</string>
-    <string name="ticket_s_w">S\u0026W%</string>
-    <string name="ticket_gauge">GAUGE</string>
-    <string name="ticket_oil">OIL</string>
-    <string name="ticket_temp">TEMP.</string>
-    <string name="ticket_feet">FEET</string>
-    <string name="ticket_oil_levels">OIL LEVELS</string>
-    <string name="ticket_inch">INCH</string>
-    <string name="ticket_qrt">QRT.</string>
-    <string name="ticket_tank">TANK</string>
-    <string name="ticket_tank_table">TANK TABLE</string>
-    <string name="ticket_barrels">BARRELS</string>
-    <string name="ticket_bottoms">BOTTOMS</string>
-    <string name="ticket_high">HIGH</string>
-    <string name="ticket_low">LOW</string>
-    <string name="ticket_total_barrels">TOTAL BARRELS</string>
-    <string name="ticket_net_barrels">NET BARRELS</string>
-    <string name="ticket_on">ON</string>
-    <string name="ticket_off">OFF</string>
-    <string name="ticket_seal_on">SEAL ON</string>
-    <string name="ticket_seal_off">SEAL OFF</string>
-    <string name="ticket_meter_on">METER ON</string>
-    <string name="ticket_meter_off">METER OFF</string>
-    <string name="ticket_loaded_miles">LOADED MILES</string>
-    <string name="ticket_meter_factor">METER FACTOR</string>
-    <string name="ticket_metered_barrels">METERED BARRELS</string>
-    <string name="ticket_remarks">REMARKS</string>
-    <string name="ticket_rejected_reason">REJECTED REASON</string>
-    <string name="ticket_f">F</string>
-
-    
-    <string name="func_start">START</string>
-    <string name="func_continue">CONTINUE</string>
-    <string name="func_save">SAVE</string>
-    <string name="func_submit">SUBMIT</string>
-    <string name="func_cancel">CANCEL</string>
-    
-    <!-- print relation strings -->
-    <string name="ticket_print">Print</string>
-    <string name="coms">Scale Hauling COMS</string>
-    <string name="inc">Scale Hauling, Inc.</string>
-    <string name="lease_run_ticket">Lease Run Ticket</string>
-    <string name="parkway">4204 MacKinnon Industrial Parkway</string>
-    <string name="mobile">Mobile, AL 36693</string>
-    <string name="office">Office: (251) 338&#8211;3002</string>
-    <string name="domain">http://www.scalehauling.com/coms</string>
-    
-    <string name="print_estimated_barrels">Estimated Barrels</string>
-    <string name="print_lease_number">Lease No.</string>
-    <string name="print_operator">Operator on Field Location</string>
-    <string name="print_station_number">Station No.</string>
-    <string name="print_lease">Lease or Company Name</string>
-    <string name="print_station_name">Station Name</string>
-    <string name="print_for_account">For Account Of</string>
-    <string name="print_county">County</string>
-    <string name="print_lease_legal">Lease Legal Description</string>
-    <string name="print_state">State</string>
-    <string name="print_name_receiver">Name Of Receiver</string>
-    <string name="print_tractor_number">Tractor No.</string>
-    <string name="print_driver_name">Driver Name</string>
-    <string name="print_trailer_number">Trailer No.</string>
-    <string name="print_tank_number">Tank No.</string>
-    <string name="print_number">Ticket No.</string>
-    
-    <string name="print_date">Date</string>
-    <string name="print_gauge">Gauge</string>
-    <string name="print_obs_gravity">OBS Gravity</string>
-    <string name="print_obs_temp">OBS Temp</string>
-    <string name="print_s_w">S W%</string>
-    <string name="print_oil_temp">Oil Temp</string>
-    <string name="print_feet">Feet</string>
-    <string name="print_inch">Inch</string>
-    <string name="print_oil_levels">Oil Levels</string>
-    <string name="print_qrt">Qrt</string>
-    <string name="print_tank_table">Tank Table</string>
-    <string name="print_tank_bottoms">Tank Bottoms</string>
-    <string name="print_high">High</string>
-    <string name="print_low">Low</string>
-    <string name="print_total_barrels">Total Barrels</string>
-    <string name="print_net_barrels">Net Barrels</string>
-    <string name="print_on">On</string>
-    <string name="print_off">Off</string>
-    <string name="print_loaded_miles">Loaded Miles</string>
-    <string name="print_meter_factor">Meter Factor</string>
-    <string name="print_metered_barrels">Metered Barrels</string>
-    <string name="print_remarks">Remarks</string>
-    <string name="print_rejected_reason">Rejected Reason</string>
-        
     
     <string name="img_description"></string>
 </resources>

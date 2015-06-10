@@ -5,29 +5,20 @@ import org.json.JSONObject;
 
 public class Order {
 	
-	public String order_id = "";
-	public String state = "";
-	public String time = "";
-	public String address = "";
-	public String price = "";
-	public String driverName = "";
-	public String driverPhone = "";
+	public String type = "";
+	public int count = 0;
+	public int price = 0;
 	
 	public static Order fromJSON(JSONObject obj) {
-		Order mOrder = new Order();
+		Order object = new Order();
 
 		try {
-			mOrder.order_id		= obj.getString("transaction_id");
-			mOrder.state		= obj.getString("state");
-			mOrder.time			= obj.getString("order_time");
-			mOrder.address		= obj.getString("order_address");
-			mOrder.price		= obj.getString("price");
-			mOrder.driverName	= obj.getString("driver_name");
-			mOrder.driverPhone	= obj.getString("driver_phone");
+			object.type		= obj.getString("type");
+			object.count	= obj.getInt("count");
+			object.price	= obj.getInt("price");
 			
 		} catch (JSONException e) {
 		}
-
-		return mOrder;
+		return object;
 	}
 }

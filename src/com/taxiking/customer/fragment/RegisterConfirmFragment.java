@@ -68,7 +68,7 @@ public class RegisterConfirmFragment extends BaseFragment implements View.OnClic
 				Toast.makeText(parent, R.string.msg_input_verify_code, Toast.LENGTH_LONG).show();
 				return;
 			} else if (!CommonUtil.isNetworkAvailable(parent)) {
-				CommonUtil.showNetworkWaringDialog(parent);
+				CommonUtil.showWaringDialog(parent, parent.getString(R.string.warning), parent.getString(R.string.msg_network_error));
 			} else {
 				new VerifyAsyncTask().execute(confirmNumber);
 			}

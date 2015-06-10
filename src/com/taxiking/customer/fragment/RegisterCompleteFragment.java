@@ -8,7 +8,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.location.Location;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.taxiking.customer.LoginActivity;
+import com.taxiking.customer.MainActivity;
 import com.taxiking.customer.R;
 import com.taxiking.customer.apiservice.HttpApi;
 import com.taxiking.customer.apiservice.HttpApi.METHOD;
@@ -76,9 +77,9 @@ public class RegisterCompleteFragment extends BaseFragment {
 				Toast.makeText(parent, R.string.msg_input_password, Toast.LENGTH_LONG).show();
 				return;
 			} else if (latitude.equals("")){
-				CommonUtil.showLocationWaringDialog(parent);
+				CommonUtil.showWaringDialog(parent, parent.getString(R.string.warning), parent.getString(R.string.msg_location_error));
 			} else if (!CommonUtil.isNetworkAvailable(parent)) {
-				CommonUtil.showNetworkWaringDialog(parent);
+				CommonUtil.showWaringDialog(parent, parent.getString(R.string.warning), parent.getString(R.string.msg_network_error));
 			} else {
 				new SetPasswordAsyncTask().execute(password, latitude, longitude);
 			}
@@ -122,6 +123,9 @@ public class RegisterCompleteFragment extends BaseFragment {
 	
 				if (result.equalsIgnoreCase("success")) {
 					
+					getActivity().finish();
+		            Intent intent = new Intent(getActivity(), MainActivity.class);
+		            startActivity(intent);
 				} else {
 					try {
 						String errorMsg = res.getString("error");

@@ -46,24 +46,24 @@ public class CommonUtil {
 		return status;
 	}
 
-	public static void showNetworkWaringDialog(final Context context) {
+	public static void showMessageDialog(final Context context, String title, String message) {
 		SSMessageDialog alert = new SSMessageDialog(context,
-				context.getString(R.string.warning), context.getString(R.string.msg_network_error),
+				title, message,
 				context.getString(R.string.confirm));
 		alert.show();
 		alert.setMessageDilogListener(new MessageDilogListener() {
 
 			@Override
 			public void onButtonClick(int id) {
-				Intent intent = new Intent(android.provider.Settings.ACTION_SETTINGS);
-				context.startActivity(intent);
+//				Intent intent = new Intent(android.provider.Settings.ACTION_SETTINGS);
+//				context.startActivity(intent);
 			}
 		});
 	}
 	
-	public static void showLocationWaringDialog(final Context context) {
+	public static void showWaringDialog(final Context context, String title, String message) {
 		SSMessageDialog alert = new SSMessageDialog(context,
-				context.getString(R.string.warning), context.getString(R.string.msg_location_error),
+				title, message,
 				context.getString(R.string.confirm));
 		alert.show();
 		alert.setMessageDilogListener(new MessageDilogListener() {

@@ -67,7 +67,7 @@ public class RegisterPhoneNumberFragment extends BaseFragment  implements View.O
 				Toast.makeText(parent, R.string.msg_input_phone_number, Toast.LENGTH_LONG).show();
 				return;
 			} else if (!CommonUtil.isNetworkAvailable(parent)) {
-				CommonUtil.showNetworkWaringDialog(parent);
+				CommonUtil.showWaringDialog(parent, parent.getString(R.string.warning), parent.getString(R.string.msg_network_error));
 			} else {
 				new RegisterPhoneNumberAsyncTask().execute(phoneNumber);
 			}

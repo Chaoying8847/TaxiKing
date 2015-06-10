@@ -1,27 +1,47 @@
 package com.taxiking.customer;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
 
+import com.baidu.mapapi.SDKInitializer;
 import com.taxiking.customer.fragment.MapFragment;
 import com.taxiking.customer.fragment.MoreFragment;
-import com.taxiking.customer.fragment.OrderFragment;
+import com.taxiking.customer.fragment.OrderHistoryFragment;
 import com.taxiking.customer.fragment.PriceListFragment;
 import com.taxiking.customer.utils.AppConstants;
+import com.taxiking.customer.utils.CommonUtil;
 
 public class MainActivity extends BaseRightMenuActivity implements OnClickListener {
 	public static MainActivity instance = null;
 
+	private static final String LTAG = MainActivity.class.getSimpleName();
+	private SDKReceiver mReceiver;
 	// Data
 	private int mCurrentFragmentIndex = AppConstants.SW_FRAGMENT_MORE;
 	public static boolean isBackPressed = false;
+
+	public class SDKReceiver extends BroadcastReceiver {
+		public void onReceive(Context context, Intent intent) {
+			String s = intent.getAction();
+			Log.d(LTAG, "action: " + s);
+			if (s.equals(SDKInitializer.SDK_BROADTCAST_ACTION_STRING_PERMISSION_CHECK_ERROR)) {
+				CommonUtil.showMessageDialog(MainActivity.this, getString(R.string.error), "百度SDK 验证出错");
+			} else if (s.equals(SDKInitializer.SDK_BROADCAST_ACTION_STRING_NETWORK_ERROR)) {
+				CommonUtil.showWaringDialog(MainActivity.this, getString(R.string.warning), getString(R.string.msg_network_error));
+			}
+		}
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -37,9 +57,7 @@ public class MainActivity extends BaseRightMenuActivity implements OnClickListen
 		android.app.ActionBar actionBar = this.getActionBar();
 		if (actionBar != null) {
 			actionBar.setIcon(R.drawable.ic_menu_list);
-			
 //			actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_list);
-//			actionBar.setIcon(getResources().getDrawable(R.drawable.ic_menu_list));
 		}
 
 		// left menu
@@ -59,6 +77,13 @@ public class MainActivity extends BaseRightMenuActivity implements OnClickListen
 		 * show home first
 		 */
 		SwitchContent(AppConstants.SW_FRAGMENT_HOME, null);
+		
+		// 注册 SDK 广播监听者
+		IntentFilter iFilter = new IntentFilter();
+		iFilter.addAction(SDKInitializer.SDK_BROADTCAST_ACTION_STRING_PERMISSION_CHECK_ERROR);
+		iFilter.addAction(SDKInitializer.SDK_BROADCAST_ACTION_STRING_NETWORK_ERROR);
+		mReceiver = new SDKReceiver();
+		registerReceiver(mReceiver, iFilter);
 	}
 
 	@Override
@@ -155,7 +180,7 @@ public class MainActivity extends BaseRightMenuActivity implements OnClickListen
 			if (mCurrentFragmentIndex == AppConstants.SW_FRAGMENT_HOME) {
 				fragment = MapFragment.newInstance();
 			} else if (mCurrentFragmentIndex == AppConstants.SW_FRAGMENT_ORDER) {
-				fragment = OrderFragment.newInstance();  
+				fragment = OrderHistoryFragment.newInstance();  
 			} else if (mCurrentFragmentIndex == AppConstants.SW_FRAGMENT_PRICE_LIST) {
 				fragment = PriceListFragment.newInstance();
 			} else if (mCurrentFragmentIndex == AppConstants.SW_FRAGMENT_MORE) {
@@ -206,6 +231,12 @@ public class MainActivity extends BaseRightMenuActivity implements OnClickListen
 	@Override
 	protected void onLeftMenuOpened() {
 		super.onLeftMenuOpened();
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		unregisterReceiver(mReceiver);
 	}
 }
 

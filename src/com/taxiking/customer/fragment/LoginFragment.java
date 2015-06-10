@@ -5,11 +5,11 @@ import java.util.List;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Intent;
-import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -25,8 +25,8 @@ import com.taxiking.customer.R;
 import com.taxiking.customer.apiservice.HttpApi;
 import com.taxiking.customer.apiservice.HttpApi.METHOD;
 import com.taxiking.customer.base.BaseFragment;
-import com.taxiking.customer.fragment.RegisterCompleteFragment.SetPasswordAsyncTask;
-import com.taxiking.customer.service.GPSTracker;
+import com.taxiking.customer.model.Driver;
+import com.taxiking.customer.model.ServiceType;
 import com.taxiking.customer.utils.AppConstants;
 import com.taxiking.customer.utils.CommonUtil;
 
@@ -85,9 +85,9 @@ public class LoginFragment extends BaseFragment {
 				Toast.makeText(parent, R.string.msg_input_password, Toast.LENGTH_LONG).show();
 				return;
 			} else if (latitude.equals("")){
-				CommonUtil.showLocationWaringDialog(parent);
+				CommonUtil.showWaringDialog(parent, parent.getString(R.string.warning), parent.getString(R.string.msg_location_error));
 			} else if (!CommonUtil.isNetworkAvailable(parent)) {
-				CommonUtil.showNetworkWaringDialog(parent);
+				CommonUtil.showWaringDialog(parent, parent.getString(R.string.warning), parent.getString(R.string.msg_network_error));
 			} else {
 				new LoginAsyncTask().execute(phoneNumber, password, latitude, longitude);
 			}
@@ -135,6 +135,36 @@ public class LoginFragment extends BaseFragment {
 					try {
 						String session_token = res.getString("session_token");
 						parent.prefs.setSession(session_token);
+						
+//						{"drivers":[{"last_update":"2015-06-09 02:54:24","longitude":"-79","latitude":"43"}],
+//							"result":"success",
+//							"account_info":{"first_time_order":"true","promo_info":{"value":"0.00","code":""},"phone_number":"12345678901"},
+//							"service_info":{"limo":"30","taxi":"5"},
+//							"current_status":{"error":"No active transaction","result":"fail"},
+//							"past_orders":[]}
+						
+						// drivers parse
+						ArrayList <Driver> driverArray = new ArrayList<Driver>();
+						JSONArray driverJsonArray = res.getJSONArray("drivers");
+						for (int i=0; i<driverJsonArray.length(); i++) {
+							Driver driver = Driver.fromJSON(driverJsonArray.getJSONObject(i));
+							driverArray.add(driver);
+						}
+						
+						// service type parse
+						ArrayList <ServiceType> serviceArray = new ArrayList<ServiceType>();
+						JSONObject serviceObject = res.getJSONObject("service_info");
+						JSONArray serviceNames = serviceObject.names();
+						
+						for (int i=0; i<serviceNames.length(); i++) {
+							ServiceType serviceType = new ServiceType();
+							serviceType.type = serviceNames.getString(i);
+							serviceType.price = serviceObject.getDouble(serviceType.type);
+							serviceArray.add(serviceType);
+						}
+						
+						
+						
 						
 						getActivity().finish();
 			            Intent intent = new Intent(getActivity(), MainActivity.class);

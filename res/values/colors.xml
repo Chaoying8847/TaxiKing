@@ -9,10 +9,4 @@
     <color name="grey_color">#939598</color>
     
     
-    <color name="login_input_back_color">#dde5fa</color>
-    <color name="login_input_color">#f6f6f6</color>
-    <color name="screen_back_color">#eeeeee</color>
-    
-    <color name="link_color">#0099cc</color>
-    
 </resources>

@@ -9,7 +9,7 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.taxiking.customer.model.Order;
+import com.taxiking.customer.model.OrderHistory;
 import com.taxiking.customer.sqllite.DatabaseHandler;
 import com.taxiking.customer.utils.AppConstants;
 import com.taxiking.customer.utils.AppDeviceUtils;
@@ -25,7 +25,7 @@ public class SubmitService extends Service {
 //	private int timerInterval = 10000;
 
 	private DatabaseHandler dbHandler;
-	private ArrayList<Order> orderList;
+	private ArrayList<OrderHistory> orderList;
 	
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -99,7 +99,7 @@ public class SubmitService extends Service {
 		}
 	}
 	
-	private void submitTicket(final Order order) {
+	private void submitTicket(final OrderHistory order) {
 //		Log.d(TAG, "Ticket " + ticket.ticket_id + " submit started by service");
 //		final APIUtil api = new APIUtil();
 //		api.submitTicket(new APIListener() {

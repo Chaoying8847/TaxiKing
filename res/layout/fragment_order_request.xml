@@ -1,0 +1,109 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_bg_color" >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_tile">
+    </TextView>
+    
+    <LinearLayout
+        android:id="@+id/bottom_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+        
+        <TextView
+	        android:layout_width="match_parent"
+	        android:layout_height="1dp"
+	        android:background="@color/grey_color">
+	    </TextView>
+    
+        <LinearLayout
+            android:layout_width="match_parent"
+        	android:layout_height="@dimen/menu_size"
+        	android:orientation="horizontal" >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/margin_normal"
+                android:layout_marginRight="@dimen/margin_normal"
+                android:gravity="center"
+                android:text="@string/address"
+                android:textColor="@color/main_pink_color"
+                android:textSize="20sp" />
+            <TextView
+                android:id="@+id/txt_address"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginRight="@dimen/margin_normal"
+                android:gravity="center_vertical|right"
+                android:text="同善桥南街8号附1号(近欧尚超市)"
+                android:textColor="@color/text_gray"
+                android:textSize="16sp"/>
+        </LinearLayout>
+        
+        <TextView
+	        android:layout_width="match_parent"
+	        android:layout_height="1dp"
+	        android:background="@color/grey_color">
+	    </TextView>
+	    
+        <LinearLayout
+            android:layout_width="match_parent"
+        	android:layout_height="@dimen/menu_size"
+        	android:orientation="horizontal" >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/margin_normal"
+                android:layout_marginRight="@dimen/margin_normal"
+                android:gravity="center"
+                android:text="@string/total_price"
+                android:textColor="@color/main_pink_color"
+                android:textSize="20sp" />
+            <TextView
+                android:id="@+id/txt_total_price"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginRight="@dimen/margin_normal"
+                android:gravity="center_vertical|right"
+                android:text="10$"
+                android:textColor="@color/text_gray"
+                android:textSize="16sp" />
+        </LinearLayout>
+        
+        <TextView
+	        android:layout_width="match_parent"
+	        android:layout_height="1dp"
+	        android:background="@color/grey_color">
+	    </TextView>
+	    
+	    <Button
+	        android:id="@+id/btn_pay"
+            android:layout_width="match_parent"
+        	android:layout_height="@dimen/menu_size"
+        	android:background="@color/main_pink_color"
+        	android:text="@string/wechat_pay"
+        	android:textColor="@android:color/white"
+        	android:textSize="22sp"
+        	android:textStyle="bold" />
+    </LinearLayout>
+    
+    <ListView
+        android:id="@+id/order_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom_view"
+        android:choiceMode="singleChoice"
+        android:divider="@color/main_pink_color"
+        android:dividerHeight="1dp" >
+    </ListView>
+
+</RelativeLayout>
