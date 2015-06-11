@@ -54,6 +54,12 @@ public class BaseFragmentActivity extends FragmentActivity/* implements GestureD
 			fragmentManager.popBackStack();
 		}	
 	}
+	
+	public void goHome() {
+		if(fragmentManager.getBackStackEntryCount() > 0) {
+			fragmentManager.popBackStack(0, 0);
+		}	
+	}
 
 //	@Override
 //	public boolean onTouchEvent(MotionEvent event) {

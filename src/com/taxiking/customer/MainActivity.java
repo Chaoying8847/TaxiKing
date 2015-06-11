@@ -21,9 +21,11 @@ import com.taxiking.customer.fragment.OrderHistoryFragment;
 import com.taxiking.customer.fragment.PriceListFragment;
 import com.taxiking.customer.utils.AppConstants;
 import com.taxiking.customer.utils.CommonUtil;
+import com.taxiking.customer.utils.WaitDialog;
 
 public class MainActivity extends BaseRightMenuActivity implements OnClickListener {
 	public static MainActivity instance = null;
+	private WaitDialog waitDlg;
 
 	private static final String LTAG = MainActivity.class.getSimpleName();
 	private SDKReceiver mReceiver;
@@ -36,7 +38,7 @@ public class MainActivity extends BaseRightMenuActivity implements OnClickListen
 			String s = intent.getAction();
 			Log.d(LTAG, "action: " + s);
 			if (s.equals(SDKInitializer.SDK_BROADTCAST_ACTION_STRING_PERMISSION_CHECK_ERROR)) {
-				CommonUtil.showMessageDialog(MainActivity.this, getString(R.string.error), "百度SDK 验证出错");
+//				CommonUtil.showMessageDialog(MainActivity.this, getString(R.string.error), "百度SDK 验证出错");
 			} else if (s.equals(SDKInitializer.SDK_BROADCAST_ACTION_STRING_NETWORK_ERROR)) {
 				CommonUtil.showWaringDialog(MainActivity.this, getString(R.string.warning), getString(R.string.msg_network_error));
 			}
@@ -57,7 +59,6 @@ public class MainActivity extends BaseRightMenuActivity implements OnClickListen
 		android.app.ActionBar actionBar = this.getActionBar();
 		if (actionBar != null) {
 			actionBar.setIcon(R.drawable.ic_menu_list);
-//			actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_list);
 		}
 
 		// left menu
@@ -72,6 +73,8 @@ public class MainActivity extends BaseRightMenuActivity implements OnClickListen
 		layout_price_list.setOnClickListener(this);
 		layout_more.setOnClickListener(this);
 		layout_logout.setOnClickListener(this);
+		
+		waitDlg = new WaitDialog(this);
 
 		/*
 		 * show home first
@@ -237,6 +240,14 @@ public class MainActivity extends BaseRightMenuActivity implements OnClickListen
 	protected void onDestroy() {
 		super.onDestroy();
 		unregisterReceiver(mReceiver);
+	}
+	
+	public void showWaitView() {
+		waitDlg.show();
+	}
+	
+	public void hideWaitView() {
+		waitDlg.cancel();
 	}
 }
 

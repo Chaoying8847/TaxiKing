@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_bg_color" >
+    
+    <TextView
+        android:id="@+id/txt_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="@dimen/margin_large"
+        android:gravity="center"
+        android:text="@string/wait_about_30min"
+        android:textColor="@color/main_pink_color"
+        android:textSize="20sp"/>
+    
+    <LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_large"
+        android:padding="@dimen/margin_extra_large"
+	    android:layout_below="@id/txt_title"
+	    android:background="@drawable/input_bg_white"
+	    android:orientation="vertical">
+	    
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/menu_size"
+	        android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+            	android:layout_height="match_parent"
+                android:text="@string/order_id"
+                android:textSize="18sp" />
+            <TextView
+                android:id="@+id/txt_order_id"
+                android:layout_width="0dp"
+            	android:layout_height="match_parent"
+            	android:layout_weight="1"
+            	android:gravity="right"
+                android:text=""
+                android:textColor="@color/text_gray"
+                android:textSize="18sp" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/menu_size"
+	        android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+            	android:layout_height="match_parent"
+                android:text="@string/order_time"
+                android:textSize="18sp" />
+            <TextView
+                android:id="@+id/txt_order_time"
+                android:layout_width="0dp"
+            	android:layout_height="match_parent"
+            	android:layout_weight="1"
+            	android:gravity="right"
+                android:text=""
+                android:textColor="@color/text_gray"
+                android:textSize="18sp" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/menu_size"
+	        android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+            	android:layout_height="match_parent"
+                android:text="@string/address"
+                android:textSize="18sp" />
+            <TextView
+                android:id="@+id/txt_address"
+                android:layout_width="0dp"
+            	android:layout_height="match_parent"
+            	android:layout_weight="1"
+            	android:gravity="right"
+                android:text=""
+                android:textColor="@color/text_gray"
+                android:textSize="18sp" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/menu_size"
+	        android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+            	android:layout_height="match_parent"
+                android:text="@string/total_price"
+                android:textSize="18sp" />
+            <TextView
+                android:id="@+id/txt_order_total_price"
+                android:layout_width="0dp"
+            	android:layout_height="match_parent"
+            	android:layout_weight="1"
+            	android:gravity="right"
+                android:text=""
+                android:textColor="@color/text_gray"
+                android:textSize="18sp" />
+        </LinearLayout>
+        
+	</LinearLayout>
+    
+    
+    <Button
+        android:id="@+id/btn_complete"
+        android:layout_width="match_parent"
+	    android:layout_height="@dimen/menu_size"
+	    android:layout_alignParentBottom="true"
+	    android:background="@color/main_pink_color"
+	    android:gravity="center"
+        android:text="@string/order_complete"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"/>
+    
+    <Button
+        android:id="@+id/btn_call_driver"
+        android:layout_width="match_parent"
+	    android:layout_height="@dimen/menu_size"
+	    android:layout_above="@id/btn_complete"
+	    android:layout_margin="@dimen/margin_extra_large"
+	    android:background="@drawable/btn_outline_pink"
+	    android:gravity="center"
+        android:text="@string/call_to_driver"
+        android:textStyle="bold"
+        android:textColor="@color/main_pink_color"
+        android:textSize="26sp"/>
+    
+</RelativeLayout>

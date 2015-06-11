@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -25,9 +24,8 @@ import com.taxiking.customer.R;
 import com.taxiking.customer.apiservice.HttpApi;
 import com.taxiking.customer.apiservice.HttpApi.METHOD;
 import com.taxiking.customer.base.BaseFragment;
-import com.taxiking.customer.model.Driver;
-import com.taxiking.customer.model.ServiceType;
 import com.taxiking.customer.utils.AppConstants;
+import com.taxiking.customer.utils.AppDataUtilities;
 import com.taxiking.customer.utils.CommonUtil;
 
 public class LoginFragment extends BaseFragment {
@@ -136,35 +134,7 @@ public class LoginFragment extends BaseFragment {
 						String session_token = res.getString("session_token");
 						parent.prefs.setSession(session_token);
 						
-//						{"drivers":[{"last_update":"2015-06-09 02:54:24","longitude":"-79","latitude":"43"}],
-//							"result":"success",
-//							"account_info":{"first_time_order":"true","promo_info":{"value":"0.00","code":""},"phone_number":"12345678901"},
-//							"service_info":{"limo":"30","taxi":"5"},
-//							"current_status":{"error":"No active transaction","result":"fail"},
-//							"past_orders":[]}
-						
-						// drivers parse
-						ArrayList <Driver> driverArray = new ArrayList<Driver>();
-						JSONArray driverJsonArray = res.getJSONArray("drivers");
-						for (int i=0; i<driverJsonArray.length(); i++) {
-							Driver driver = Driver.fromJSON(driverJsonArray.getJSONObject(i));
-							driverArray.add(driver);
-						}
-						
-						// service type parse
-						ArrayList <ServiceType> serviceArray = new ArrayList<ServiceType>();
-						JSONObject serviceObject = res.getJSONObject("service_info");
-						JSONArray serviceNames = serviceObject.names();
-						
-						for (int i=0; i<serviceNames.length(); i++) {
-							ServiceType serviceType = new ServiceType();
-							serviceType.type = serviceNames.getString(i);
-							serviceType.price = serviceObject.getDouble(serviceType.type);
-							serviceArray.add(serviceType);
-						}
-						
-						
-						
+						AppDataUtilities.sharedInstance().setDataFromLoginJsonData(res);
 						
 						getActivity().finish();
 			            Intent intent = new Intent(getActivity(), MainActivity.class);

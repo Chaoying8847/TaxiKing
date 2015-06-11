@@ -49,4 +49,22 @@
         <attr name="interpolator" format="reference" />
     </declare-styleable>
     
+    <!-- Number Picker View -->
+    <declare-styleable name="NumberPicker">
+        <attr name="npIsHorizontal" format="boolean" />
+    </declare-styleable>
+    
+    <!-- Rating bar -->
+    <style name="myRatingBarSmall" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/ratingbar_small</item>
+        <item name="android:minHeight">@dimen/margin_large</item>
+        <item name="android:maxHeight">@dimen/margin_large</item>
+    </style>
+
+    <style name="myRatingBarLarge" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/ratingbar_large</item>
+        <item name="android:minHeight">@dimen/margin_very_large</item>
+        <item name="android:maxHeight">@dimen/margin_very_large</item>
+    </style>
+    
 </resources>

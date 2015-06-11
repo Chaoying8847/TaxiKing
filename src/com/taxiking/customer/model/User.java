@@ -7,36 +7,22 @@ import android.util.Log;
 
 public class User {
 	public static final String TAG = "JSON Parse Err In User";
-
-	public String user_id;
-	public String username;
-	public String firstName;
-	public String lastName;
-	public String phoneNo;
-	public String email;
-	public int type;
-	public String driverNo;
-	public String tractorNo;
-	public String owner;
-	public String deviceSerial;
-	public boolean active;
+	
+	public String phone_number;
+	public Boolean first_time_order;
+	public String promo_info_value;
+	public String promo_info_code;
 
 	public static User fromJSON(JSONObject obj) {
 		User mUser = new User();
 
 		try {
-			mUser.user_id	= obj.getString("id");
-			mUser.firstName	= obj.getString("firstName");
-			mUser.lastName	= obj.getString("lastName");
-			mUser.username	= obj.getString("username");
-			mUser.phoneNo	= obj.getString("phoneNo");
-			mUser.email		= obj.getString("email");
-			mUser.type		= obj.getInt("type");
-			mUser.driverNo	= obj.getString("driverNo");
-			mUser.tractorNo	= obj.getString("tractorNo");
-			mUser.owner		= obj.getString("owner");
-			mUser.deviceSerial = obj.getString("deviceSerial");
-			mUser.active	= true;
+			mUser.phone_number	= obj.getString("phone_number");
+			mUser.first_time_order	= obj.getBoolean("first_time_order");
+			
+			JSONObject promo_info = obj.getJSONObject("promo_info");
+			mUser.promo_info_value	= promo_info.getString("value");
+			mUser.promo_info_code	= promo_info.getString("code");
 		} catch (JSONException e) {
 			Log.d(TAG, e.toString());
 		}

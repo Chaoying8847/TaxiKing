@@ -37,6 +37,17 @@
     <string name="address">地址 :</string>
     <string name="total_price">总价 :</string>
     <string name="wechat_pay">微信支付</string>
+    <string name="waiting_confirm_order">正在确认订单</string>
+    
+    <string name="order_success">订单确认成功</string>
+    <string name="order_number">订单号:</string>
+    <string name="order_time">订单时间:</string>
+    <string name="call_to_driver">联系司机</string>
+    <string name="order_complete">结束行程</string>
+    <string name="wait_about_30min">订单已确认, 请等待大约30分钟</string>
+    <string name="confirm_order_complete">确认行程已结束?</string>
+    
+    <string name="service_rating">服务评分</string>
     
     
     <!-- Message box -->
@@ -50,7 +61,7 @@
     <string name="msg_select_item">Must select at least 1 item</string>
     <string name="msg_select_rating">Must select a rating</string>
     <string name="msg_input_anything">Must not leave any empty input</string>
-    <string name="msg_"></string>
+    <string name="msg_select_car">Must select a car</string>
     
     
     <string name="img_description"></string>
