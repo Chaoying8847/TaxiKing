@@ -9,7 +9,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -77,6 +76,13 @@ public class OrderRequestFragment extends BaseFragment {
 		listView.setAdapter(adapter);
 		
 		txtAddress = (TextView)rootview.findViewById(R.id.txt_address);
+		if (AppDataUtilities.sharedInstance().CurrentAddress.equalsIgnoreCase("")) {
+			txtAddress.setText("");
+		} else {
+			txtAddress.setText(AppDataUtilities.sharedInstance().CurrentAddress);
+		}
+		
+		
 		txtTotalPrice = (TextView)rootview.findViewById(R.id.txt_total_price);
 		btnPay = (Button)rootview.findViewById(R.id.btn_pay);
 		btnPay.setOnClickListener(new View.OnClickListener() {
@@ -84,10 +90,12 @@ public class OrderRequestFragment extends BaseFragment {
 			public void onClick(View v) {
 				if (totalPrice == 0) {
 					Toast.makeText(parent, R.string.msg_select_car, Toast.LENGTH_LONG).show();
+				} else if (AppDataUtilities.sharedInstance().CurrentAddress.equalsIgnoreCase("")) {
+					Toast.makeText(parent, "Couldn't get address", Toast.LENGTH_LONG).show();
 				} else {
 					final String latitude 	= prefs.getLatitude();
 					final String longitude 	= prefs.getLongitude();
-					new RequestAsyncTask().execute(String.format("%d", totalPrice), "同善桥南街8号附1号", latitude, longitude);
+					new RequestAsyncTask().execute(String.format("%d", totalPrice), AppDataUtilities.sharedInstance().CurrentAddress, latitude, longitude);
 				}
 			}
 		});

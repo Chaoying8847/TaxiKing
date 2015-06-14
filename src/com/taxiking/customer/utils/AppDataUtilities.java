@@ -22,10 +22,12 @@ public class AppDataUtilities {
 	public ArrayList <OrderHistory> orderHistoryArray;
 	public User account;
 	public CurrentStatus status;
+	public String CurrentAddress;
 	
 	public String transaction_id;
 	public String pay_id;
 	public String pay_key;
+	
 	
 	public AppDataUtilities() {
 		
@@ -36,6 +38,7 @@ public class AppDataUtilities {
 		transaction_id	= "";
 		pay_id			= "";
 		pay_key			= "";
+		CurrentAddress	= "";
 	}
 	
 	public static AppDataUtilities sharedInstance() {
