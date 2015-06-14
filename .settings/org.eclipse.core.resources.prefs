@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
 encoding//src/com/taxiking/customer/MainActivity.java=UTF-8
+encoding//src/com/taxiking/customer/fragment/MapFragment.java=UTF-8
 encoding//src/com/taxiking/customer/fragment/OrderHistoryFragment.java=UTF-8
 encoding//src/com/taxiking/customer/fragment/OrderRequestFragment.java=UTF-8
