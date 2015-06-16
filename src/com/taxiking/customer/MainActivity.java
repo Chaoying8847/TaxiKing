@@ -7,7 +7,6 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,8 +16,13 @@ import android.widget.Toast;
 import com.baidu.mapapi.SDKInitializer;
 import com.taxiking.customer.fragment.MapFragment;
 import com.taxiking.customer.fragment.MoreFragment;
+import com.taxiking.customer.fragment.OrderCompleteFragment;
 import com.taxiking.customer.fragment.OrderHistoryFragment;
+import com.taxiking.customer.fragment.OrderRequestFragment;
+import com.taxiking.customer.fragment.OrderStatusCheckFragment;
 import com.taxiking.customer.fragment.PriceListFragment;
+import com.taxiking.customer.fragment.SendInfoFragment;
+import com.taxiking.customer.fragment.ServiceRatingFragment;
 import com.taxiking.customer.utils.AppConstants;
 import com.taxiking.customer.utils.CommonUtil;
 import com.taxiking.customer.utils.WaitDialog;
@@ -30,7 +34,7 @@ public class MainActivity extends BaseRightMenuActivity implements OnClickListen
 	private static final String LTAG = MainActivity.class.getSimpleName();
 	private SDKReceiver mReceiver;
 	// Data
-	private int mCurrentFragmentIndex = AppConstants.SW_FRAGMENT_MORE;
+	public int mCurrentFragmentIndex = AppConstants.SW_FRAGMENT_MORE;
 	public static boolean isBackPressed = false;
 
 	public class SDKReceiver extends BroadcastReceiver {
@@ -38,7 +42,7 @@ public class MainActivity extends BaseRightMenuActivity implements OnClickListen
 			String s = intent.getAction();
 			Log.d(LTAG, "action: " + s);
 			if (s.equals(SDKInitializer.SDK_BROADTCAST_ACTION_STRING_PERMISSION_CHECK_ERROR)) {
-//				CommonUtil.showMessageDialog(MainActivity.this, getString(R.string.error), "百度SDK 验证出错");
+				CommonUtil.showMessageDialog(MainActivity.this, getString(R.string.error), "百度SDK 验证出错");
 			} else if (s.equals(SDKInitializer.SDK_BROADCAST_ACTION_STRING_NETWORK_ERROR)) {
 				CommonUtil.showWaringDialog(MainActivity.this, getString(R.string.warning), getString(R.string.msg_network_error));
 			}
@@ -114,8 +118,8 @@ public class MainActivity extends BaseRightMenuActivity implements OnClickListen
 
 	@Override
 	public void onBackPressed() {
-		super.onBackPressed();
-//		onBackButtonPressed();
+//		super.onBackPressed();
+		onBackButtonPressed();
 	}
 
 	boolean isBackAllowed = false;
@@ -123,15 +127,15 @@ public class MainActivity extends BaseRightMenuActivity implements OnClickListen
 		if (mSlideMenu.isOpen()) {
 			mSlideMenu.close(true);
 			return;
-		} else {
-			if (mCurrentFragmentIndex != AppConstants.SW_FRAGMENT_HOME) {
-				SwitchContent(AppConstants.SW_FRAGMENT_HOME, null);
-				return;
-			}
+		}
+	
+		if (mCurrentFragmentIndex != AppConstants.SW_FRAGMENT_HOME) {
+			SwitchContent(AppConstants.SW_FRAGMENT_HOME, null);
+			return;
 		}
 
 		if(!isBackAllowed) {
-			Toast.makeText(this, R.string.app_name, Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, R.string.msg_exit_confirm, Toast.LENGTH_SHORT).show();
 			isBackAllowed = true;
 			new Handler().postDelayed(new Runnable() {
 				@Override
@@ -156,7 +160,7 @@ public class MainActivity extends BaseRightMenuActivity implements OnClickListen
 			break;
 
 		case R.id.layout_order:
-			SwitchContent(AppConstants.SW_FRAGMENT_ORDER, null);
+			SwitchContent(AppConstants.SW_FRAGMENT_ORDER_HISTORY, null);
 			break;
 
 		case R.id.layout_price_list:
@@ -168,39 +172,47 @@ public class MainActivity extends BaseRightMenuActivity implements OnClickListen
 			break;
 
 		case R.id.layout_logout:
-			finish();
+			prefs.setSession("");
 			Intent intent = new Intent(this, LoginActivity.class);
-			startActivity(intent);	
+			startActivity(intent);
+			finish();
 			break;
 		}
 	}
 
 	public void SwitchContent(int fragment_index, Bundle bundle) {
 		// update the main content by replacing fragments
+		
 		Fragment fragment = null;
 		if (mCurrentFragmentIndex != fragment_index) {
-			mCurrentFragmentIndex = fragment_index;
-			if (mCurrentFragmentIndex == AppConstants.SW_FRAGMENT_HOME) {
+			if (fragment_index == AppConstants.SW_FRAGMENT_HOME) {
 				fragment = MapFragment.newInstance();
-			} else if (mCurrentFragmentIndex == AppConstants.SW_FRAGMENT_ORDER) {
+			} else if (fragment_index == AppConstants.SW_FRAGMENT_ORDER_REQUEST) {
+				fragment = OrderRequestFragment.newInstance();  
+			} else if (fragment_index == AppConstants.SW_FRAGMENT_ORDER_CHECK) {
+				fragment = OrderStatusCheckFragment.newInstance();  
+			} else if (fragment_index == AppConstants.SW_FRAGMENT_ORDER_COMPLETE) {
+				fragment = OrderCompleteFragment.newInstance();
+			} else if (fragment_index == AppConstants.SW_FRAGMENT_RATING) {
+				fragment = ServiceRatingFragment.newInstance();
+			} else if (fragment_index == AppConstants.SW_FRAGMENT_SEND_INFO) {
+				fragment = SendInfoFragment.newInstance();
+			} else if (fragment_index == AppConstants.SW_FRAGMENT_ORDER_HISTORY) {
 				fragment = OrderHistoryFragment.newInstance();  
-			} else if (mCurrentFragmentIndex == AppConstants.SW_FRAGMENT_PRICE_LIST) {
+			} else if (fragment_index == AppConstants.SW_FRAGMENT_PRICE_LIST) {
 				fragment = PriceListFragment.newInstance();
-			} else if (mCurrentFragmentIndex == AppConstants.SW_FRAGMENT_MORE) {
+			} else if (fragment_index == AppConstants.SW_FRAGMENT_MORE) {
 				fragment = MoreFragment.newInstance();
 			}
 
 			if (fragment != null) {
-				try {
-					if (bundle != null)
-						fragment.setArguments(bundle);
-
-					FragmentManager fragmentManager = this.getSupportFragmentManager();
-					fragmentManager.beginTransaction().replace(R.id.view_body, fragment).commit();
+				if (fragment_index < AppConstants.SW_FRAGMENT_ORDER_HISTORY && fragment_index<mCurrentFragmentIndex) {
+					popFragment(fragment, true);
+				} else {
+					showFragment(fragment, false, true);
 				}
-				catch(Exception e) {
-					e.printStackTrace();
-				}
+				
+				mCurrentFragmentIndex = fragment_index;
 			}
 		}
 
@@ -238,8 +250,10 @@ public class MainActivity extends BaseRightMenuActivity implements OnClickListen
 	
 	@Override
 	protected void onDestroy() {
-		super.onDestroy();
+//		stopService( new Intent(this, GPSTracker.class));
 		unregisterReceiver(mReceiver);
+		
+		super.onDestroy();
 	}
 	
 	public void showWaitView() {
@@ -249,100 +263,7 @@ public class MainActivity extends BaseRightMenuActivity implements OnClickListen
 	public void hideWaitView() {
 		waitDlg.cancel();
 	}
-}
-
-//public class MainActivity	extends BaseFragmentActivity
-//							implements OnCheckedChangeListener, OnClickListener {
-//
-//	private RadioButton radioOpen;
-//	private RadioButton radioSubmmited;
-//	private RadioButton radioClosed;
-//	private Button btnRefresh;
-//	
-//	private TicketFragment ticketFragment;
-//
-//	public AppPreferences appPreference;
-//	public static MainActivity mainActivity; 
-//	
-//	private TempReceiver mReceiver;
-//	
-//	@Override
-//	protected void onCreate(Bundle savedInstanceState) {
-//		super.onCreate(savedInstanceState);
-//		setContentView(R.layout.activity_main);
-//
-//		radioOpen = (RadioButton)findViewById(R.id.radio_open);
-//		radioSubmmited = (RadioButton)findViewById(R.id.radio_submitted);
-//		radioClosed = (RadioButton)findViewById(R.id.radio_closed);
-//		btnRefresh = (Button)findViewById(R.id.btn_refresh);
-//		
-//		radioOpen.setOnCheckedChangeListener(this);
-//		radioSubmmited.setOnCheckedChangeListener(this);
-//		radioClosed.setOnCheckedChangeListener(this);
-//		btnRefresh.setOnClickListener(this);
-//
-//		ticketFragment = TicketFragment.newInstance();
-//		
-//		appPreference = new AppPreferences(this);
-//		appPreference.setWillTicketSubmit(false);
-//
-//		mainActivity = this;
-//
-//		setTabClickable();
-//		loadDataFromServer();
-//
-//		mReceiver = new TempReceiver();
-//	}
-//
-//	@Override
-//	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//		if(isChecked) {
-//			switch (buttonView.getId()) {
-//			case R.id.radio_open:
-//				showFragment(Ticket.OPEN_TICKET);
-//				break;
-//			case R.id.radio_submitted:
-//				showFragment(Ticket.SUB_TICKET);
-//				break;
-//			case R.id.radio_closed:
-//				showFragment(Ticket.CLOSED_TICKET);
-//				break;
-//			default:
-//				break;
-//			}
-//		}
-//	}
-//
-//	public void setTabClickable() {
-//		if (appPreference.isTicketSubmitted()) {
-//			radioOpen.setClickable(true);
-//			radioSubmmited.setClickable(true);
-//			radioClosed.setClickable(true);
-//			btnRefresh.setClickable(true);
-//		} else {
-//			radioOpen.setClickable(false);
-//			radioSubmmited.setClickable(false);
-//			radioClosed.setClickable(false);
-//			btnRefresh.setClickable(false);
-//		}
-//	}
-//
-//	@Override
-//	public void onBackPressed() {
-//		final WaitDialog waitDialog = new WaitDialog(this);
-//		waitDialog.show();
-//		final APIUtil api = new APIUtil();
-//		api.logout(new APIListener(){
-//			@Override
-//			public void onResult(Object ret, int err) {
-//				appPreference.setNoLogin(true);
-//				waitDialog.cancel();
-//				finish();
-//			}
-//		});
-//		super.onBackPressed();
-//	}
-//	
+	
 //	@Override
 //	protected void onResume() {
 //		super.onResume();
@@ -354,160 +275,4 @@ public class MainActivity extends BaseRightMenuActivity implements OnClickListen
 //		super.onPause();
 //		unregisterReceiver(mReceiver);
 //	}
-//
-//	@Override
-//	public void onClick(View v) {
-//		int id = v.getId();
-//		switch (id) {
-//		case R.id.btn_refresh:
-//			GeoLocationService.saveLocation();
-//
-//			if (radioOpen.isChecked()) {
-//				refreshFragmentTicketOpens();
-//			} else if (radioSubmmited.isChecked()) {
-//				refreshFragmentTicketSubs();
-//			} else if (radioClosed.isChecked()) {
-//				refreshFragmentTicketCloseds();
-//			}
-//			break;
-//		default:
-//			break;
-//		}
-//		
-//	}
-//
-//	public void showFragment(int ticketType) {
-//		ticketFragment.setTicketType(ticketType);
-//		ticketFragment.notifyDataSetChanged();
-//		showFragment(ticketFragment, false, false);
-//	}
-//
-//	public void refreshFragmentTicketOpens() {
-//		final WaitDialog waitDialog = new WaitDialog(this);
-//		waitDialog.show();
-//		final APIUtil api = new APIUtil();
-//		api.getTicketOpen(new APIListener() {
-//			@Override
-//			public void onResult(Object ret, int err) {
-//				switch (err) {
-//				case AppConstants.ERR_OK:
-//					ticketFragment.setOpenData(api.ticketOpens);
-//					ticketFragment.notifyDataSetChanged();
-//					break;
-//				case AppConstants.ERR_NODATA:
-//					ticketFragment.setOpenData(null);
-//					ticketFragment.notifyDataSetChanged();
-//					break;
-//				case AppConstants.ERR_CLIENT_NETWORK:
-//					Toast.makeText(MainActivity.this, "Please check network status", Toast.LENGTH_LONG).show();
-//					break;
-//				}
-//				waitDialog.cancel();
-//			}
-//		});
-//	}
-//
-//	public void refreshFragmentTicketSubs() {
-//		final WaitDialog waitDialog = new WaitDialog(MainActivity.this);
-//		waitDialog.show();
-//		final APIUtil api = new APIUtil();
-//		api.getTicketSub(new APIListener() {
-//			@Override
-//			public void onResult(Object ret, int err) {
-//				switch (err) {
-//				case AppConstants.ERR_OK:
-//					ticketFragment.setSubData(api.ticketSubs);
-//					ticketFragment.notifyDataSetChanged();
-//					break;
-//				case AppConstants.ERR_NODATA:
-//					ticketFragment.setSubData(null);
-//					ticketFragment.notifyDataSetChanged();
-//					break;
-//				case AppConstants.ERR_CLIENT_NETWORK:
-//					Toast.makeText(MainActivity.this, "Please check network status", Toast.LENGTH_LONG).show();
-//					break;
-//				}
-//				waitDialog.cancel();
-//			}
-//		});
-//	}
-//	
-//	private void refreshFragmentTicketCloseds() {
-//		final WaitDialog waitDialog = new WaitDialog(MainActivity.this);
-//		waitDialog.show();
-//		final APIUtil api = new APIUtil();
-//		api.getTicketClosed(new APIListener() {
-//			@Override
-//			public void onResult(Object ret, int err) {
-//				switch (err) {
-//				case AppConstants.ERR_OK:
-//					ticketFragment.setClosedData(api.ticketCloseds);
-//					ticketFragment.notifyDataSetChanged();
-//					break;
-//				case AppConstants.ERR_NODATA:
-//					ticketFragment.setClosedData(null);
-//					ticketFragment.notifyDataSetChanged();
-//					break;
-//				case AppConstants.ERR_CLIENT_NETWORK:
-//					Toast.makeText(MainActivity.this, "Please check network status", Toast.LENGTH_LONG).show();
-//					break;
-//				}
-//				waitDialog.cancel();
-//			}
-//		});
-//	}
-//	
-//	private void loadDataFromServer() {
-//		final WaitDialog waitDialog = new WaitDialog(MainActivity.this);
-//		waitDialog.show();
-//		final APIUtil api = new APIUtil();
-//		if (AppDeviceUtils.isOnline(this)) {
-//			api.totalTicketFromUserId(new APIListener() {
-//				@Override
-//				public void onResult(Object ret, int err) {
-//					switch (err) {
-//					case AppConstants.ERR_OK:
-//						ticketFragment.setOpenData(api.ticketOpens);
-//						ticketFragment.setSubData(api.ticketSubs);
-//						ticketFragment.setClosedData(api.ticketCloseds);
-//						break;
-//					case AppConstants.ERR_NODATA:
-//					default:
-//						ticketFragment.setOpenData(null);
-//						break;
-//					}
-//					showFragment(Ticket.OPEN_TICKET);
-//					waitDialog.cancel();
-//				}
-//			});
-//		} else {
-//			Toast.makeText(MainActivity.this, "Please check network status", Toast.LENGTH_LONG).show();
-//			finish();
-//		}
-//	}
-//
-//	private class TempReceiver extends BroadcastReceiver {
-//		@Override
-//		public void onReceive(Context context, Intent intent) {
-//			String action = intent.getAction();
-//			
-//			if (action.equals(AppConstants.REFRESH_SCREEN)) {
-//				boolean isrefresh = intent.getBooleanExtra(AppConstants.HAS_SUBMITTED, false);
-//				if (isrefresh && radioOpen.isChecked()) {
-////					Log.d("debug", "refreshed");
-//					refreshFragmentTicketOpens();
-//				}
-//			}
-//		}
-//	}
-//	
-//	@Override
-//	protected void onDestroy() {
-//		
-//		stopService( new Intent(this, GeoLocationService.class));
-//
-//		stopService( new Intent(this, SubmitService.class));
-//
-//		super.onDestroy();
-//	}
-//}
+}

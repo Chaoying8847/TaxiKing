@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_bg_color" >
+    
+    <TextView
+        android:id="@+id/txt_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="@dimen/margin_large"
+        android:gravity="center"
+        android:text="@string/input_info"
+        android:textColor="@color/main_pink_color"
+        android:textSize="18sp"/>
+    
+    <Button
+        android:id="@+id/btn_confirm"
+        android:layout_width="match_parent"
+	    android:layout_height="@dimen/menu_size"
+	    android:layout_alignParentBottom="true"
+	    android:background="@color/main_pink_color"
+	    android:gravity="center"
+        android:text="@string/confirm"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"/>
+    
+    <EditText
+        android:id="@+id/txt_name"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/menu_size"
+    	android:layout_margin="@dimen/margin_large"
+    	android:layout_below="@id/txt_title"
+    	android:paddingLeft="@dimen/margin_large"
+    	android:background="#80FFFFFF"
+    	android:hint="@string/name"
+    	android:textColor="@color/main_pink_color"
+        android:textSize="18sp">
+        <requestFocus />
+    </EditText>
+        
+    <EditText
+        android:id="@+id/txt_phone"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/menu_size"
+    	android:layout_margin="@dimen/margin_large"
+    	android:layout_below="@id/txt_name"
+    	android:paddingLeft="@dimen/margin_large"
+    	android:background="#80FFFFFF"
+    	android:hint="@string/phone"
+    	android:textColor="@color/main_pink_color"
+        android:textSize="18sp"
+        android:inputType="phone"/>
+        
+    <EditText
+        android:id="@+id/txt_address"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+    	android:layout_margin="@dimen/margin_large"
+    	android:layout_below="@id/txt_phone"
+    	android:layout_above="@id/btn_confirm"
+    	android:paddingLeft="@dimen/margin_large"
+    	android:background="#80FFFFFF"
+    	android:hint="@string/address"
+    	android:textColor="@color/main_pink_color"
+        android:textSize="18sp"
+        android:inputType="textMultiLine"/>
+    
+</RelativeLayout>

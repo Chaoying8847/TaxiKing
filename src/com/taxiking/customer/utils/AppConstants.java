@@ -30,9 +30,15 @@ public class AppConstants {
 	/*
 	 * Fragment IDs
 	 */
-	public static final int SW_FRAGMENT_HOME = 0x100;
-	public static final int SW_FRAGMENT_ORDER = 0x200;
-	public static final int SW_FRAGMENT_PRICE_LIST = 0x300;
-	public static final int SW_FRAGMENT_MORE = 0x400;
+	public static final int SW_FRAGMENT_HOME 			= 0x100;
+	public static final int SW_FRAGMENT_ORDER_REQUEST 	= 0x110;
+	public static final int SW_FRAGMENT_ORDER_CHECK 	= 0x111;
+	public static final int SW_FRAGMENT_ORDER_COMPLETE 	= 0x112;
+	public static final int SW_FRAGMENT_RATING 			= 0x113;
+	public static final int SW_FRAGMENT_SEND_INFO 		= 0x114;
+	
+	public static final int SW_FRAGMENT_ORDER_HISTORY 	= 0x200;
+	public static final int SW_FRAGMENT_PRICE_LIST 		= 0x300;
+	public static final int SW_FRAGMENT_MORE 			= 0x400;
 	
 }

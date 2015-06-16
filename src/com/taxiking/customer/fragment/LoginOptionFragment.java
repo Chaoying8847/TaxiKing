@@ -11,8 +11,6 @@ import com.taxiking.customer.base.BaseFragment;
 
 public class LoginOptionFragment extends BaseFragment implements View.OnClickListener {
 
-	private LayoutInflater layoutInflater;
-	
 	private Button btnLogin;
 	private Button btnRegister;
 	private Button btnTerms;
@@ -31,7 +29,6 @@ public class LoginOptionFragment extends BaseFragment implements View.OnClickLis
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		layoutInflater = inflater;
 		View rootview = inflater.inflate(R.layout.fragment_login_option, null);
 		
 		btnLogin	= (Button)rootview.findViewById(R.id.btn_login);

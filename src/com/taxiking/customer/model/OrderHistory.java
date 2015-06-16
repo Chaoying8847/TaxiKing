@@ -18,12 +18,12 @@ public class OrderHistory {
 
 		try {
 			object.order_id		= obj.getString("transaction_id");
-			object.state		= obj.getString("state");
 			object.time			= obj.getString("order_time");
 			object.address		= obj.getString("order_address");
 			object.price		= obj.getString("price");
 			object.driverName	= obj.getString("driver_name");
 			object.driverPhone	= obj.getString("driver_phone");
+			object.state		= obj.getString("state");
 			
 		} catch (JSONException e) {
 		}

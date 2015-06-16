@@ -48,7 +48,10 @@
     <string name="confirm_order_complete">确认行程已结束?</string>
     
     <string name="service_rating">服务评分</string>
-    
+    <string name="send_info">免费Taxi</string>
+    <string name="input_info">请填写信息, 用来寄送您的免费套</string>
+    <string name="name">姓名</string>
+    <string name="phone">电话</string>
     
     <!-- Message box -->
     <string name="warning">警告</string>
@@ -63,6 +66,6 @@
     <string name="msg_input_anything">Must not leave any empty input</string>
     <string name="msg_select_car">Must select a car</string>
     
-    
+    <string name="msg_exit_confirm">Please tap one more time to exit</string>
     <string name="img_description"></string>
 </resources>

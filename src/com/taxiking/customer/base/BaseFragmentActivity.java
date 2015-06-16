@@ -48,6 +48,17 @@ public class BaseFragmentActivity extends FragmentActivity/* implements GestureD
 		
 		transaction.commit();
 	}
+	
+	public void popFragment(Fragment fragment, boolean isAnimation) {
+		FragmentTransaction transaction = fragmentManager.beginTransaction();
+		
+		if(isAnimation)
+			transaction.setCustomAnimations(R.anim.pop_enter, R.anim.pop_exit, R.anim.enter, R.anim.exit);
+		
+		transaction.replace(R.id.view_body, fragment);
+
+		transaction.commit();
+	}
 
 	public void goBack() {
 		if(fragmentManager.getBackStackEntryCount() > 0) {

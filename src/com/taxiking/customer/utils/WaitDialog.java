@@ -23,6 +23,7 @@ public class WaitDialog extends Dialog {
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		this.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 		this.setContentView(new ProgressBar(this.getContext()));
+		this.setCancelable(false);
 	}
 
 	@Override

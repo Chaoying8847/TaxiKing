@@ -81,7 +81,7 @@ public class OrderStatusCheckFragment extends BaseFragment {
 						} else {
 							AppDataUtilities.sharedInstance().status = CurrentStatus.fromJSON(statusObject);
 						}
-						parent.showFragment(OrderCompleteFragment.newInstance(), true);
+						MainActivity.instance.SwitchContent(AppConstants.SW_FRAGMENT_ORDER_COMPLETE, null);
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
@@ -93,7 +93,7 @@ public class OrderStatusCheckFragment extends BaseFragment {
 								new CheckStatusAsyncTask().execute();
 							} else {
 								MainActivity.instance.hideWaitView();
-								parent.showFragment(OrderCompleteFragment.newInstance(), false);
+								MainActivity.instance.SwitchContent(AppConstants.SW_FRAGMENT_ORDER_COMPLETE, null);
 							}
 						}
 					}, 3000);

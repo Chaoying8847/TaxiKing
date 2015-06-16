@@ -11,6 +11,7 @@ import com.taxiking.customer.MainActivity;
 import com.taxiking.customer.R;
 import com.taxiking.customer.base.BaseFragment;
 import com.taxiking.customer.model.CurrentStatus;
+import com.taxiking.customer.utils.AppConstants;
 import com.taxiking.customer.utils.AppDataUtilities;
 import com.taxiking.customer.view.dialog.SSMessageDialog;
 import com.taxiking.customer.view.dialog.SSMessageDialog.MessageDilogListener;
@@ -78,7 +79,7 @@ public class OrderCompleteFragment extends BaseFragment implements View.OnClickL
 				@Override
 				public void onButtonClick(int id) {
 					if (id == R.id.btn_1){
-						OrderCompleteFragment.this.parent.showFragment(ServiceRatingFragment.newInstance(), true);
+						MainActivity.instance.SwitchContent(AppConstants.SW_FRAGMENT_RATING, null);
 					}
 				}
 			});

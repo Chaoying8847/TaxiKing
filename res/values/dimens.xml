@@ -24,6 +24,7 @@
     
     <!-- top menu -->
     <dimen name="menu_size">48dp</dimen>
+    <dimen name="rating_height">56dp</dimen>
     
     <!-- Image Size -->
     <dimen name="image_extra_small">24dp</dimen>

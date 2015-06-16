@@ -28,6 +28,7 @@ import com.taxiking.customer.MainActivity;
 import com.taxiking.customer.R;
 import com.taxiking.customer.base.BaseFragment;
 import com.taxiking.customer.model.Driver;
+import com.taxiking.customer.utils.AppConstants;
 import com.taxiking.customer.utils.AppDataUtilities;
 
 public class MapFragment extends BaseFragment implements OnGetGeoCoderResultListener {
@@ -61,7 +62,7 @@ public class MapFragment extends BaseFragment implements OnGetGeoCoderResultList
 		btnRequest.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				MapFragment.this.parent.showFragment(OrderRequestFragment.newInstance(), true);
+				MainActivity.instance.SwitchContent(AppConstants.SW_FRAGMENT_ORDER_REQUEST, null);
 			}
 		});
 		

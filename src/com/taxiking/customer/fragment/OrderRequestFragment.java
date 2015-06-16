@@ -244,7 +244,7 @@ public class OrderRequestFragment extends BaseFragment {
 						AppDataUtilities.sharedInstance().pay_id = wechat_payment_info.getString("pay_id");
 						AppDataUtilities.sharedInstance().pay_key = wechat_payment_info.getString("pay_key");
 						
-						parent.showFragment(OrderStatusCheckFragment.newInstance(), true);
+						MainActivity.instance.SwitchContent(AppConstants.SW_FRAGMENT_ORDER_CHECK, null);
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}

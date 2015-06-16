@@ -64,7 +64,7 @@
     <style name="myRatingBarLarge" parent="@android:style/Widget.RatingBar">
         <item name="android:progressDrawable">@drawable/ratingbar_large</item>
         <item name="android:minHeight">@dimen/margin_very_large</item>
-        <item name="android:maxHeight">@dimen/margin_very_large</item>
+        <item name="android:maxHeight">@dimen/margin_really_large</item>
     </style>
     
 </resources>
