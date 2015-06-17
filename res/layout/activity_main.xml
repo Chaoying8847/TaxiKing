@@ -6,11 +6,23 @@
     android:layout_height="match_parent" >
 
     <RelativeLayout
-        android:id="@+id/view_body"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        slidemenu:layout_role="content"
-        android:background="@color/main_bg_color" >
+        android:layout_height="match_parent">
+        
+        <RelativeLayout
+	        android:id="@+id/view_body"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        slidemenu:layout_role="content"
+	        android:background="@color/main_bg_color" >
+	    </RelativeLayout>
+	    
+	    <TextView
+	        android:id="@+id/view_shadow"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:background="#80000000"
+	        android:visibility="gone" />
     </RelativeLayout>
 
 </me.tangke.slidemenu.SlideMenu>

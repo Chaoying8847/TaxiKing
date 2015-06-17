@@ -9,12 +9,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MarkerOptions;
+import com.baidu.mapapi.map.MyLocationConfiguration;
+import com.baidu.mapapi.map.MyLocationConfiguration.LocationMode;
+import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.map.UiSettings;
 import com.baidu.mapapi.model.LatLng;
@@ -37,6 +44,8 @@ public class MapFragment extends BaseFragment implements OnGetGeoCoderResultList
 	private BaiduMap mBaiduMap;
 	private GeoCoder mSearch = null;
 	private UiSettings mUiSettings;
+	private LocationClient mLocClient;
+	private MyLocationListenner myListener = new MyLocationListenner();
 	
 	private BitmapDescriptor mMark = BitmapDescriptorFactory.fromResource(R.drawable.icon_map_mark);
 	
@@ -76,6 +85,24 @@ public class MapFragment extends BaseFragment implements OnGetGeoCoderResultList
 		// compass added
 		mUiSettings = mBaiduMap.getUiSettings();
 		mUiSettings.setCompassEnabled(true);
+		
+		mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(LocationMode.NORMAL, true, null));
+		mBaiduMap.setMyLocationEnabled(true);
+		// 定位初始化
+		MyLocationData locData = new MyLocationData.Builder()
+			.direction(0).latitude(Float.valueOf(latitude))
+			.longitude(Float.valueOf(longitude)).build();
+		mBaiduMap.setMyLocationData(locData);
+		
+		// get location from gps
+		mLocClient = new LocationClient(parent);
+		mLocClient.registerLocationListener(myListener);
+		LocationClientOption option = new LocationClientOption();
+		option.setOpenGps(true);// 打开gps
+//		option.setCoorType("bd09ll"); // 设置坐标类型
+		option.setScanSpan(1000);
+		mLocClient.setLocOption(option);
+		mLocClient.start();
 		
 		//search address
 		mSearch = GeoCoder.newInstance();
@@ -131,5 +158,33 @@ public class MapFragment extends BaseFragment implements OnGetGeoCoderResultList
 		}
 		AppDataUtilities.sharedInstance().CurrentAddress = result.getAddress();
 //		Toast.makeText(parent, result.getAddress(),	Toast.LENGTH_LONG).show();
+	}
+	
+	public class MyLocationListenner implements BDLocationListener {
+
+		@Override
+		public void onReceiveLocation(BDLocation location) {
+			// map view 销毁后不在处理新接收的位置
+			if (location == null || mMapView == null)
+				return;
+			MyLocationData locData = new MyLocationData.Builder()
+					.accuracy(location.getRadius())
+					// 此处设置开发者获取到的方向信息，顺时针0-360
+					.direction(100).latitude(location.getLatitude())
+					.longitude(location.getLongitude()).build();
+			mBaiduMap.setMyLocationData(locData);
+			/*
+			if (isFirstLoc) {
+				isFirstLoc = false;
+				LatLng ll = new LatLng(location.getLatitude(),
+						location.getLongitude());
+				MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
+				mBaiduMap.animateMapStatus(u);
+			}
+			*/
+		}
+
+		public void onReceivePoi(BDLocation poiLocation) {
+		}
 	}
 }

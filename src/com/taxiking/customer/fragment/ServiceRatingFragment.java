@@ -26,6 +26,8 @@ import com.taxiking.customer.base.BaseFragment;
 import com.taxiking.customer.utils.AppConstants;
 import com.taxiking.customer.utils.AppDataUtilities;
 import com.taxiking.customer.utils.CommonUtil;
+import com.taxiking.customer.view.dialog.SSMessageDialog;
+import com.taxiking.customer.view.dialog.SSMessageDialog.MessageDilogListener;
 
 public class ServiceRatingFragment extends BaseFragment implements OnClickListener {
 
@@ -50,7 +52,7 @@ public class ServiceRatingFragment extends BaseFragment implements OnClickListen
 			Bundle savedInstanceState) {
 
 		View rootview = inflater.inflate(R.layout.fragment_service_rating, null);
-		
+
 		ratingView	= (RatingBar)rootview.findViewById(R.id.ratingView);
 		txtComment	= (EditText)rootview.findViewById(R.id.txt_comment);
 		btnConfirm	= (Button)rootview.findViewById(R.id.btn_confirm);
@@ -71,10 +73,25 @@ public class ServiceRatingFragment extends BaseFragment implements OnClickListen
 			if(ratingValue == 0) {
 				Toast.makeText(parent, R.string.msg_select_rating, Toast.LENGTH_LONG).show();
 				return;
-			} else if (!CommonUtil.isNetworkAvailable(parent)) {
-				CommonUtil.showWaringDialog(parent, parent.getString(R.string.warning), parent.getString(R.string.msg_network_error));
 			} else {
-				new RatingAsyncTask().execute(AppDataUtilities.sharedInstance().status.transaction_id, String.format("%.2f", ratingValue), comments);
+				SSMessageDialog alert = new SSMessageDialog(parent,
+						parent.getString(R.string.share_with), "", parent.getString(R.string.weixin),
+						parent.getString(R.string.weibo));
+				alert.show();
+				alert.setMessageDilogListener(new MessageDilogListener() {
+					@Override
+					public void onButtonClick(int id) {
+						if (id == R.id.btn_0){
+						} else if (id == R.id.btn_1){
+						}
+						
+						if (!CommonUtil.isNetworkAvailable(parent)) {
+							CommonUtil.showWaringDialog(parent, parent.getString(R.string.warning), parent.getString(R.string.msg_network_error));
+						} else {
+							new RatingAsyncTask().execute(AppDataUtilities.sharedInstance().status.transaction_id, String.format("%.2f", ratingValue), comments);
+						}
+					}
+				});
 			}
 			break;
 		case R.id.btn_back:
@@ -85,7 +102,6 @@ public class ServiceRatingFragment extends BaseFragment implements OnClickListen
 		}
 	}
 	
-
 	public class RatingAsyncTask extends AsyncTask<String, String, JSONObject> {
 
 		@Override

@@ -17,6 +17,8 @@ import com.taxiking.customer.MainActivity;
 import com.taxiking.customer.R;
 import com.taxiking.customer.base.BaseFragment;
 import com.taxiking.customer.model.OrderHistory;
+import com.taxiking.customer.utils.AppConstants;
+import com.taxiking.customer.utils.AppDataUtilities;
 
 public class OrderHistoryFragment extends BaseFragment {
 
@@ -45,18 +47,7 @@ public class OrderHistoryFragment extends BaseFragment {
 		adapter = new OrderAdapter(parent, R.layout.view_order_history_item);
 		listView.setAdapter(adapter);
 		
-		arrOrders = new ArrayList<OrderHistory>();
-		for (int i=0; i<5; i++) {
-			OrderHistory order = new OrderHistory();
-			order.address = "出发地点出发地点出发";
-			order.price = "10";
-			order.order_id = "25271688";
-			order.time = "20/6/2015";
-			order.state = "未评级";
-			
-			arrOrders.add(order);
-		}
-				
+		arrOrders = AppDataUtilities.sharedInstance().orderHistoryArray;
 		return rootview;
 	}
 	
@@ -93,23 +84,32 @@ public class OrderHistoryFragment extends BaseFragment {
 			holder.txtOrderId = (TextView) convertView.findViewById(R.id.txt_order_id);
 			holder.txtTime = (TextView) convertView.findViewById(R.id.txt_date);
 			holder.txtState = (TextView) convertView.findViewById(R.id.txt_status);
-			
-			convertView.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-				}
-			});
-			
+					
 			OrderHistory orderItem = arrOrders.get(position);
 			
 			if (orderItem != null) {
 				
 				holder.txtStartLocation.setText(orderItem.address);
-				holder.txtPrice.setText(orderItem.price + getResources().getString(R.string.money_unit));
+				holder.txtPrice.setText(orderItem.wechat_charge + getResources().getString(R.string.money_unit));
 				holder.txtOrderId.setText(orderItem.order_id);
-				holder.txtTime.setText(orderItem.time);
-				holder.txtState.setText(orderItem.state);
+				holder.txtTime.setText(orderItem.end_time);
+				if (orderItem.rating.equalsIgnoreCase("")) {
+					holder.txtState.setText("未评级");
+				} else {
+					holder.txtState.setText("已完成");
+				}
 			}
+			
+			convertView.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					OrderHistory orderHistoryItem = arrOrders.get(position);
+					if (orderHistoryItem.rating == null || orderHistoryItem.rating.equalsIgnoreCase("")) {
+						AppDataUtilities.sharedInstance().status.transaction_id = orderHistoryItem.order_id;
+						MainActivity.instance.SwitchContent(AppConstants.SW_FRAGMENT_RATING, null);
+					}
+				}
+			});
 			
 			return convertView;
 		}

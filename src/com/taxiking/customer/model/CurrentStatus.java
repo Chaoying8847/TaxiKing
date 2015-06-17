@@ -32,8 +32,8 @@ public class CurrentStatus {
 			status.driver_name		= obj.getString("driver_name");
 			status.driver_phone		= obj.getString("driver_phone");
 			status.estimate_end		= obj.getString("estimate_end");
-			status.error			= "";	
-			status.result			= "success";				
+			status.error			= "";
+			status.result			= "success";
 		} catch (JSONException e) {
 			Log.d(TAG, e.toString());
 		}

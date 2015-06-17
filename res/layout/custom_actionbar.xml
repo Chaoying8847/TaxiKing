@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/menu_size"
+    android:background="@color/main_pink_color"
+    android:orientation="horizontal"
+    android:gravity="center_vertical" >
+
+	<Button
+		android:id="@+id/btn_menu"
+		android:layout_width="32dp"
+		android:layout_height="32dp"
+		android:layout_margin="@dimen/margin_small"
+		android:background="@drawable/ic_menu_list"/>
+	<TextView
+		android:layout_width="4dp"
+		android:layout_height="match_parent"
+		android:background="@drawable/topbar_divider"/>
+	<TextView
+	    android:id="@+id/title_text"
+		android:layout_width="0dp"
+		android:layout_height="match_parent"
+		android:layout_weight="1"
+		android:layout_marginRight="44dp"
+		android:gravity="center"
+		android:paddingLeft="@dimen/margin_large"
+		android:text="@string/menu_need"
+		android:textStyle="bold"
+		android:textColor="@android:color/white"
+		android:textSize="18sp"/>
+</LinearLayout>

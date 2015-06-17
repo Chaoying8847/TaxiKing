@@ -6,11 +6,13 @@ import org.json.JSONObject;
 public class OrderHistory {
 	
 	public String order_id = "";
-	public String state = "";
-	public String time = "";
 	public String address = "";
-	public String price = "";
+	public String end_time = "";
 	public String driverName = "";
+	public String price = "";
+	public String promo_amount = "";
+	public String wechat_charge = "";
+	public String rating = "";
 	public String driverPhone = "";
 	
 	public static OrderHistory fromJSON(JSONObject obj) {
@@ -18,12 +20,13 @@ public class OrderHistory {
 
 		try {
 			object.order_id		= obj.getString("transaction_id");
-			object.time			= obj.getString("order_time");
-			object.address		= obj.getString("order_address");
-			object.price		= obj.getString("price");
+			object.address		= obj.getString("address_string");
+			object.end_time			= obj.getString("actual_end_time");
 			object.driverName	= obj.getString("driver_name");
-			object.driverPhone	= obj.getString("driver_phone");
-			object.state		= obj.getString("state");
+			object.price		= obj.getString("price");
+			object.promo_amount		= obj.getString("price");
+			object.wechat_charge		= obj.getString("price");
+			object.rating		= obj.getString("price");
 			
 		} catch (JSONException e) {
 		}

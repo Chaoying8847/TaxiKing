@@ -1,5 +1,6 @@
 package com.taxiking.customer;
 
+import android.app.ActionBar;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -8,9 +9,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baidu.mapapi.SDKInitializer;
@@ -30,6 +35,7 @@ import com.taxiking.customer.utils.WaitDialog;
 public class MainActivity extends BaseRightMenuActivity implements OnClickListener {
 	public static MainActivity instance = null;
 	private WaitDialog waitDlg;
+	private TextView mTitleTextView;
 
 	private static final String LTAG = MainActivity.class.getSimpleName();
 	private SDKReceiver mReceiver;
@@ -60,10 +66,28 @@ public class MainActivity extends BaseRightMenuActivity implements OnClickListen
 		View img_app_icon = mSlideMenu.getPrimaryMenu().findViewById(R.id.img_app_icon);
 		img_app_icon.setOnClickListener(this);
 
-		android.app.ActionBar actionBar = this.getActionBar();
-		if (actionBar != null) {
-			actionBar.setIcon(R.drawable.ic_menu_list);
-		}
+		ActionBar mActionBar = getActionBar();
+		mActionBar.setDisplayShowHomeEnabled(false);
+		mActionBar.setDisplayShowTitleEnabled(false);
+		LayoutInflater mInflater = LayoutInflater.from(this);
+		
+		LinearLayout mCustomView = (LinearLayout)mInflater.inflate(R.layout.custom_actionbar, null);
+		mTitleTextView = (TextView) mCustomView.findViewById(R.id.title_text);
+
+		Button menuButton = (Button) mCustomView.findViewById(R.id.btn_menu);
+		menuButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				if (mSlideMenu.isOpen()) {
+					mSlideMenu.close(true);
+				} else { 
+					mSlideMenu.open(false, true);
+				}
+			}
+		});
+
+		mActionBar.setCustomView(mCustomView);
+		mActionBar.setDisplayShowCustomEnabled(true);
 
 		// left menu
 		View layout_home = mSlideMenu.getPrimaryMenu().findViewById(R.id.layout_home);
@@ -100,9 +124,9 @@ public class MainActivity extends BaseRightMenuActivity implements OnClickListen
 
 	@Override
 	public void setTitle(CharSequence title) {
-		super.setTitle(title);
+		mTitleTextView.setText(title);
 	}
-
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem menuItem) {
 		switch (menuItem.getItemId()) {

@@ -30,25 +30,20 @@
         android:textColor="@android:color/white"
         android:textSize="18sp"/>
     
-    <ScrollView
-	    android:layout_width="match_parent"
+    <EditText
+        android:id="@+id/txt_comment"
+        android:layout_width="match_parent"
 	    android:layout_height="match_parent"
         android:layout_margin="@dimen/margin_large"
         android:padding="@dimen/margin_large"
 	    android:layout_below="@id/rating_group"
 	    android:layout_above="@id/btn_confirm"
 	    android:background="#80FFFFFF"
-	    android:orientation="vertical">
-
-        <EditText
-            android:id="@+id/txt_comment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="20"
-            android:inputType="textMultiLine" >
-            <requestFocus />
-        </EditText>
-        
-	</ScrollView>
+	    android:textColor="@color/text_gray"
+	    android:gravity="top"
+        android:ems="20"
+        android:inputType="textMultiLine" >
+        <requestFocus />
+    </EditText>
     
 </RelativeLayout>

@@ -4,6 +4,8 @@ import me.tangke.slidemenu.SlideMenu;
 import me.tangke.slidemenu.SlideMenu.OnSlideStateChangeListener;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import com.taxiking.customer.base.BaseFragmentActivity;
 
@@ -14,6 +16,7 @@ public abstract class BaseRightMenuActivity extends BaseFragmentActivity impleme
 
 	// UI
 	public SlideMenu mSlideMenu;
+	public TextView mShadowView;
 
 	// Data
 	public int mSlideState;
@@ -24,6 +27,7 @@ public abstract class BaseRightMenuActivity extends BaseFragmentActivity impleme
 		super.onCreate(savedInstanceState);
 		
 		setContentView(getLayoutResourceId());
+		mShadowView = (TextView)findViewById(R.id.view_shadow);
 		initMenu();
 	}
 
@@ -76,12 +80,15 @@ public abstract class BaseRightMenuActivity extends BaseFragmentActivity impleme
 	}
 
 	protected void updateWithSlidingMenu() {
+		
 	}
 
 	protected void onLeftMenuOpened() {
+		mShadowView.setVisibility(View.VISIBLE);
 	}
 
 	protected void onMenuClosed() {
+		mShadowView.setVisibility(View.GONE);
 	}
 
 	@Override
