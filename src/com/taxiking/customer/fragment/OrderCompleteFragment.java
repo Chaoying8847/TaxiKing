@@ -1,6 +1,12 @@
 package com.taxiking.customer.fragment;
 
+import android.content.ActivityNotFoundException;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +19,7 @@ import com.taxiking.customer.base.BaseFragment;
 import com.taxiking.customer.model.CurrentStatus;
 import com.taxiking.customer.utils.AppConstants;
 import com.taxiking.customer.utils.AppDataUtilities;
+import com.taxiking.customer.utils.CommonUtil;
 import com.taxiking.customer.view.dialog.SSMessageDialog;
 import com.taxiking.customer.view.dialog.SSMessageDialog.MessageDilogListener;
 
@@ -86,11 +93,31 @@ public class OrderCompleteFragment extends BaseFragment implements View.OnClickL
 			break;
 		case R.id.btn_call_driver:
 			if (status.driver_phone!=null && !status.driver_phone.equalsIgnoreCase("")) {
-				// call
+				makeCall(status.driver_phone);
 			}
 			break;
 		default:
 			break;
 		}
+	}
+	
+	private void makeCall(String mDialSting) {
+		if (((TelephonyManager)parent.getSystemService(Context.TELEPHONY_SERVICE)).getPhoneType() == TelephonyManager.PHONE_TYPE_NONE) {
+			CommonUtil.showMessageDialog(parent, getString(R.string.error),  "This device has not call ability.");
+			return;
+		}
+
+		try {
+			Intent callIntent = new Intent(Intent.ACTION_CALL);
+	        callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+	        callIntent.setData(Uri.parse("tel:"+mDialSting));
+	        if (Build.VERSION.SDK_INT > 20) // Build.VERSION_CODES.KITKAT
+	        	callIntent.setPackage("com.android.server.telecom");
+	        else
+	        	callIntent.setPackage("com.android.phone");
+	        startActivity(callIntent);
+		} catch (ActivityNotFoundException activityException) {
+	    	System.out.println("Call Failed");
+	    }
 	}
 }
