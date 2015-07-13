@@ -16,6 +16,7 @@
     </style>
     
     <style name="Theme.MyAppTheme.ActionBar.TitleTextStyle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:background">#d64569</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textStyle">bold</item>
     </style>

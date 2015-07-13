@@ -88,6 +88,7 @@ public class MainActivity extends BaseRightMenuActivity implements OnClickListen
 
 		mActionBar.setCustomView(mCustomView);
 		mActionBar.setDisplayShowCustomEnabled(true);
+		mActionBar.setBackgroundDrawable(getResources().getDrawable(R.color.main_pink_color));
 
 		// left menu
 		View layout_home = mSlideMenu.getPrimaryMenu().findViewById(R.id.layout_home);
