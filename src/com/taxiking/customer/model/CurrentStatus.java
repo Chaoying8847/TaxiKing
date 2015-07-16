@@ -14,7 +14,6 @@ public class CurrentStatus {
 	public String order_time;
 	public String order_address;
 	public double price;
-	public String driver_name;
 	public String driver_phone;
 	public String estimate_end;
 	public String error;
@@ -24,14 +23,15 @@ public class CurrentStatus {
 		CurrentStatus status = new CurrentStatus();
 	
 		try {
-			status.state			= obj.getString("state");
-			status.transaction_id	= obj.getString("transaction_id");
-			status.order_time		= obj.getString("order_time");
-			status.order_address	= obj.getString("order_address");
-			status.price			= obj.getDouble("price");
-			status.driver_name		= obj.getString("driver_name");
-			status.driver_phone		= obj.getString("driver_phone");
-			status.estimate_end		= obj.getString("estimate_end");
+			JSONObject object = obj.getJSONObject("current_status");
+			
+			status.state			= object.getString("state");
+			status.transaction_id	= object.getString("transaction_id");
+			status.order_time		= object.getString("order_time");
+			status.order_address	= object.getString("order_address");
+			status.price			= object.getDouble("price");
+			status.driver_phone		= object.getString("driver_phone");
+			status.estimate_end		= object.getString("estimate_end");
 			status.error			= "";
 			status.result			= "success";
 		} catch (JSONException e) {
@@ -50,7 +50,6 @@ public class CurrentStatus {
 			status.order_time		= "";
 			status.order_address	= "";
 			status.price			= 0;
-			status.driver_name		= "";
 			status.driver_phone		= "";
 			status.estimate_end		= "";
 			status.error			= obj.getString("error");	

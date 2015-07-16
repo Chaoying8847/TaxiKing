@@ -11,10 +11,8 @@ import android.util.Log;
 
 import com.taxiking.customer.model.OrderHistory;
 import com.taxiking.customer.sqllite.DatabaseHandler;
-import com.taxiking.customer.utils.AppConstants;
 import com.taxiking.customer.utils.AppDeviceUtils;
 import com.taxiking.customer.utils.AppPreferences;
-import com.taxiking.customer.utils.Utilities;
 
 public class SubmitService extends Service {
 	private static final String TAG = "UpdateService";

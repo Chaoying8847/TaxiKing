@@ -18,12 +18,10 @@ import org.apache.http.client.protocol.ClientContext;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.BasicHttpContext;
+import org.apache.http.protocol.HTTP;
 import org.apache.http.protocol.HttpContext;
 import org.json.JSONObject;
-
-import com.taxiking.customer.utils.AppConstants;
 
 import android.util.Log;
 
@@ -174,6 +172,7 @@ public class HttpApi {
 				HttpPost httpPost = new HttpPost(url);
 				if (params != null) {
 					httpPost.setEntity(new UrlEncodedFormEntity(params));
+					httpPost.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
 				}
 				if (header != null) {
 					for (Map.Entry<String, String> entry : header.entrySet()) {

@@ -74,17 +74,8 @@ public class OrderStatusCheckFragment extends BaseFragment {
 	
 				if (result.equalsIgnoreCase("success")) {
 					MainActivity.instance.hideWaitView();
-					try {
-						JSONObject statusObject = res.getJSONObject("current_status");
-						if (statusObject.has("error")) {
-							AppDataUtilities.sharedInstance().status = CurrentStatus.fromJSONError(statusObject);
-						} else {
-							AppDataUtilities.sharedInstance().status = CurrentStatus.fromJSON(statusObject);
-						}
-						MainActivity.instance.SwitchContent(AppConstants.SW_FRAGMENT_ORDER_COMPLETE, null);
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
+					AppDataUtilities.sharedInstance().status = CurrentStatus.fromJSON(res);
+					MainActivity.instance.SwitchContent(AppConstants.SW_FRAGMENT_ORDER_COMPLETE, null);
 				} else {
 					new Handler().postDelayed(new Runnable() {
 						@Override

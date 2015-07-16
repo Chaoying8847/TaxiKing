@@ -29,6 +29,7 @@ import com.taxiking.customer.fragment.PriceListFragment;
 import com.taxiking.customer.fragment.SendInfoFragment;
 import com.taxiking.customer.fragment.ServiceRatingFragment;
 import com.taxiking.customer.utils.AppConstants;
+import com.taxiking.customer.utils.AppDataUtilities;
 import com.taxiking.customer.utils.CommonUtil;
 import com.taxiking.customer.utils.WaitDialog;
 
@@ -104,11 +105,6 @@ public class MainActivity extends BaseRightMenuActivity implements OnClickListen
 		layout_logout.setOnClickListener(this);
 		
 		waitDlg = new WaitDialog(this);
-
-		/*
-		 * show home first
-		 */
-		SwitchContent(AppConstants.SW_FRAGMENT_HOME, null);
 		
 		// 注册 SDK 广播监听者
 		IntentFilter iFilter = new IntentFilter();
@@ -116,6 +112,20 @@ public class MainActivity extends BaseRightMenuActivity implements OnClickListen
 		iFilter.addAction(SDKInitializer.SDK_BROADCAST_ACTION_STRING_NETWORK_ERROR);
 		mReceiver = new SDKReceiver();
 		registerReceiver(mReceiver, iFilter);
+		
+		/*
+		 * show home first
+		 */
+		
+		if (AppDataUtilities.sharedInstance().status.state.equalsIgnoreCase("requested")) {
+			SwitchContent(AppConstants.SW_FRAGMENT_ORDER_CHECK, null);
+		} else if (AppDataUtilities.sharedInstance().status.state.equalsIgnoreCase("enorute")) {
+			SwitchContent(AppConstants.SW_FRAGMENT_ORDER_COMPLETE, null);
+		} else if (AppDataUtilities.sharedInstance().status.state.equalsIgnoreCase("finished")) {
+			SwitchContent(AppConstants.SW_FRAGMENT_RATING, null);
+		} else {
+			SwitchContent(AppConstants.SW_FRAGMENT_HOME, null);
+		}		
 	}
 
 	@Override

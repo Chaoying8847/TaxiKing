@@ -93,7 +93,7 @@ public class OrderHistoryFragment extends BaseFragment {
 				holder.txtPrice.setText(orderItem.wechat_charge + getResources().getString(R.string.money_unit));
 				holder.txtOrderId.setText(orderItem.order_id);
 				holder.txtTime.setText(orderItem.end_time);
-				if (orderItem.rating.equalsIgnoreCase("")) {
+				if (orderItem.rating == 0 || orderItem.rating > 5) {
 					holder.txtState.setText("未评级");
 				} else {
 					holder.txtState.setText("已完成");
@@ -104,7 +104,7 @@ public class OrderHistoryFragment extends BaseFragment {
 				@Override
 				public void onClick(View v) {
 					OrderHistory orderHistoryItem = arrOrders.get(position);
-					if (orderHistoryItem.rating == null || orderHistoryItem.rating.equalsIgnoreCase("")) {
+					if (orderHistoryItem.rating == 0 || orderHistoryItem.rating > 5) {
 						AppDataUtilities.sharedInstance().status.transaction_id = orderHistoryItem.order_id;
 						MainActivity.instance.SwitchContent(AppConstants.SW_FRAGMENT_RATING, null);
 					}

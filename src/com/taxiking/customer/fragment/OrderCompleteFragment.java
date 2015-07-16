@@ -1,9 +1,18 @@
 package com.taxiking.customer.fragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
@@ -15,6 +24,8 @@ import android.widget.TextView;
 
 import com.taxiking.customer.MainActivity;
 import com.taxiking.customer.R;
+import com.taxiking.customer.apiservice.HttpApi;
+import com.taxiking.customer.apiservice.HttpApi.METHOD;
 import com.taxiking.customer.base.BaseFragment;
 import com.taxiking.customer.model.CurrentStatus;
 import com.taxiking.customer.utils.AppConstants;
@@ -86,7 +97,7 @@ public class OrderCompleteFragment extends BaseFragment implements View.OnClickL
 				@Override
 				public void onButtonClick(int id) {
 					if (id == R.id.btn_1){
-						MainActivity.instance.SwitchContent(AppConstants.SW_FRAGMENT_RATING, null);
+						new ConfirmFinishAsyncTask().execute();
 					}
 				}
 			});
@@ -98,6 +109,41 @@ public class OrderCompleteFragment extends BaseFragment implements View.OnClickL
 			break;
 		default:
 			break;
+		}
+	}
+	
+	public class ConfirmFinishAsyncTask extends AsyncTask<String, String, JSONObject> {
+
+		@Override
+		protected void onPreExecute() {
+			MainActivity.instance.showWaitView();
+			super.onPreExecute();
+		}
+		
+		@Override
+		protected JSONObject doInBackground(String... args) {
+			
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair("session_token", prefs.getSession()));
+			params.add(new BasicNameValuePair("transaction_id", status.transaction_id));
+			
+			return HttpApi.callToJson(AppConstants.HOST_CONFIRM_FINISH, METHOD.POST, params, null);
+		}
+
+		@Override
+		protected void onPostExecute(JSONObject res) {
+			try {
+				String result = res.getString("result");
+	
+				if (result.equalsIgnoreCase("success")) {
+					MainActivity.instance.hideWaitView();
+					MainActivity.instance.SwitchContent(AppConstants.SW_FRAGMENT_RATING, null);
+				} else {
+					
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
