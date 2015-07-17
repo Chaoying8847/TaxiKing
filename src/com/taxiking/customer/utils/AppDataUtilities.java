@@ -65,7 +65,12 @@ public class AppDataUtilities {
 			
 			// current status
 			JSONObject statusObject = res.getJSONObject("current_status");
-			status = CurrentStatus.fromJSON(statusObject);
+            if (statusObject.has("error")) {
+                status = CurrentStatus.fromJSONError(statusObject);
+            } else {
+                status = CurrentStatus.fromJSON(statusObject);
+            }
+
 			
 			// service type parse
 			serviceArray = new ArrayList<ServiceType>();

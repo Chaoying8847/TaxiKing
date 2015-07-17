@@ -116,7 +116,6 @@ public class MainActivity extends BaseRightMenuActivity implements OnClickListen
 		/*
 		 * show home first
 		 */
-		
 		if (AppDataUtilities.sharedInstance().status.state.equalsIgnoreCase("requested")) {
 			SwitchContent(AppConstants.SW_FRAGMENT_ORDER_CHECK, null);
 		} else if (AppDataUtilities.sharedInstance().status.state.equalsIgnoreCase("enorute")) {
