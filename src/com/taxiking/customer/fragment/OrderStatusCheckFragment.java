@@ -45,8 +45,31 @@ public class OrderStatusCheckFragment extends BaseFragment {
 			Bundle savedInstanceState) {
 
 		View rootview = inflater.inflate(R.layout.fragment_order_status_check, null);
-		new CheckStatusAsyncTask().execute();
+
+		callCurrentStatusCheck();
 		return rootview;
+	}
+	
+	private void callCurrentStatusCheck() {
+		
+		Handler handler = new Handler();
+		handler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				if (MainActivity.instance.shouldCallStatus) {
+					count++;
+					if (count < 20) {
+						new CheckStatusAsyncTask().execute();
+						callCurrentStatusCheck();
+					} else {
+						MainActivity.instance.hideWaitView();
+						MainActivity.instance.SwitchContent(AppConstants.SW_FRAGMENT_HOME, null);
+					}
+				} else {
+					callCurrentStatusCheck();
+				}
+			}
+		}, 5000);
 	}
 	
 	public class CheckStatusAsyncTask extends AsyncTask<String, String, JSONObject> {
@@ -68,26 +91,17 @@ public class OrderStatusCheckFragment extends BaseFragment {
 
 		@Override
 		protected void onPostExecute(JSONObject res) {
-			count++;
 			try {
 				String result = res.getString("result");
-	
 				if (result.equalsIgnoreCase("success")) {
-					MainActivity.instance.hideWaitView();
+					
 					AppDataUtilities.sharedInstance().status = CurrentStatus.fromJSON(res);
-					MainActivity.instance.SwitchContent(AppConstants.SW_FRAGMENT_ORDER_COMPLETE, null);
-				} else {
-					new Handler().postDelayed(new Runnable() {
-						@Override
-						public void run() {
-							if (count<5) {
-								new CheckStatusAsyncTask().execute();
-							} else {
-								MainActivity.instance.hideWaitView();
-								MainActivity.instance.SwitchContent(AppConstants.SW_FRAGMENT_ORDER_COMPLETE, null);
-							}
+					if (AppDataUtilities.sharedInstance().status.state.equals("enroute")) {
+						if (MainActivity.instance.shouldCallStatus) {
+							MainActivity.instance.hideWaitView();
+							MainActivity.instance.SwitchContent(AppConstants.SW_FRAGMENT_ORDER_COMPLETE, null);
 						}
-					}, 3000);
+					}
 				}
 			} catch (JSONException e) {
 				e.printStackTrace();

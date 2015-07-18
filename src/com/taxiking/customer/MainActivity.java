@@ -47,7 +47,7 @@ import com.taxiking.customer.utils.WaitDialog;
 
 public class MainActivity extends BaseRightMenuActivity implements OnClickListener {
 	public static MainActivity instance = null;
-	private static Boolean shouldCallStatus;
+	public Boolean shouldCallStatus;
 	
 	private WaitDialog waitDlg;
 	private TextView mTitleTextView;
