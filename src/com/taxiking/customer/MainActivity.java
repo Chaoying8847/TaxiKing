@@ -1,10 +1,19 @@
 package com.taxiking.customer;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.ActionBar;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -19,6 +28,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baidu.mapapi.SDKInitializer;
+import com.taxiking.customer.apiservice.HttpApi;
+import com.taxiking.customer.apiservice.HttpApi.METHOD;
 import com.taxiking.customer.fragment.MapFragment;
 import com.taxiking.customer.fragment.MoreFragment;
 import com.taxiking.customer.fragment.OrderCompleteFragment;
@@ -28,6 +39,7 @@ import com.taxiking.customer.fragment.OrderStatusCheckFragment;
 import com.taxiking.customer.fragment.PriceListFragment;
 import com.taxiking.customer.fragment.SendInfoFragment;
 import com.taxiking.customer.fragment.ServiceRatingFragment;
+import com.taxiking.customer.model.CurrentStatus;
 import com.taxiking.customer.utils.AppConstants;
 import com.taxiking.customer.utils.AppDataUtilities;
 import com.taxiking.customer.utils.CommonUtil;
@@ -35,6 +47,8 @@ import com.taxiking.customer.utils.WaitDialog;
 
 public class MainActivity extends BaseRightMenuActivity implements OnClickListener {
 	public static MainActivity instance = null;
+	private static Boolean shouldCallStatus;
+	
 	private WaitDialog waitDlg;
 	private TextView mTitleTextView;
 
@@ -283,6 +297,19 @@ public class MainActivity extends BaseRightMenuActivity implements OnClickListen
 	}
 	
 	@Override
+	protected void onResume() {
+		super.onResume();
+		shouldCallStatus = true;
+		callCurrentStatus();
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		shouldCallStatus = false;
+	}
+	
+	@Override
 	protected void onDestroy() {
 //		stopService( new Intent(this, GPSTracker.class));
 		unregisterReceiver(mReceiver);
@@ -297,16 +324,54 @@ public class MainActivity extends BaseRightMenuActivity implements OnClickListen
 	public void hideWaitView() {
 		waitDlg.cancel();
 	}
+
+	private void callCurrentStatus() {
+		Handler handler = new Handler();
+		handler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				if (shouldCallStatus) {
+					if (mCurrentFragmentIndex == AppConstants.SW_FRAGMENT_HOME) {
+						new CheckStatusAsyncTask().execute();
+					}
+					callCurrentStatus();
+				}
+			}
+		}, 5000);
+	}
 	
-//	@Override
-//	protected void onResume() {
-//		super.onResume();
-//		registerReceiver(mReceiver, new IntentFilter(AppConstants.REFRESH_SCREEN));
-//	}
-//	
-//	@Override
-//	protected void onPause() {
-//		super.onPause();
-//		unregisterReceiver(mReceiver);
-//	}
+	public class CheckStatusAsyncTask extends AsyncTask<String, String, JSONObject> {
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+		}
+		
+		@Override
+		protected JSONObject doInBackground(String... args) {
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair("session_token", prefs.getSession()));
+		
+			return HttpApi.callToJson(AppConstants.HOST_CURRENT_STATUS, METHOD.POST, params, null);
+		}
+
+		@Override
+		protected void onPostExecute(JSONObject res) {
+			try {
+				String result = res.getString("result");
+				if (result.equalsIgnoreCase("success")) {
+					AppDataUtilities.sharedInstance().status = CurrentStatus.fromJSON(res);
+					if (AppDataUtilities.sharedInstance().status.state.equals("requested")) {
+						SwitchContent(AppConstants.SW_FRAGMENT_ORDER_CHECK, null);
+					} else if (AppDataUtilities.sharedInstance().status.state.equals("enroute")) {
+						SwitchContent(AppConstants.SW_FRAGMENT_ORDER_COMPLETE, null);
+					} else if (AppDataUtilities.sharedInstance().status.state.equals("finished")) {
+						SwitchContent(AppConstants.SW_FRAGMENT_RATING, null);
+					}
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }

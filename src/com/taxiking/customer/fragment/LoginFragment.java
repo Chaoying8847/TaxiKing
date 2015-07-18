@@ -87,6 +87,7 @@ public class LoginFragment extends BaseFragment {
 			} else if (!CommonUtil.isNetworkAvailable(parent)) {
 				CommonUtil.showWaringDialog(parent, parent.getString(R.string.warning), parent.getString(R.string.msg_network_error));
 			} else {
+//				new LoginAsyncTask().execute(phoneNumber, password, "39.9558222", "116.2789134");
 				new LoginAsyncTask().execute(phoneNumber, password, latitude, longitude);
 			}
 			break;
